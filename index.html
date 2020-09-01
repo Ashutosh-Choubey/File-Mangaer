@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vue app</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script> <!-- for Deployment-->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><!-- for Development-->
+
+</head>
+<body>
+  <nav class=" navbar navbar-expand-lg fixed-top " style="background-color: #dbeaf6ea;">
+        
+    <a class="navbar-brand" href="#">ABC Company Name</a>
+    
+
+</nav>
+  <div class="bg-dark" style="margin: 10%;margin-bottom: 0%;align-items:baseline;" >
+  <button class="btn btn-light" style="margin:1%;">Update</button>
+  </div>
+  <div id="app" style="margin-left:5%;margin-right: 5%;">
+
+    {{ message }}
+    <table>
+      <centre><tr>
+        <th>IMPORTER NAME</th> 			
+        <th>DATE</th>
+        <th>JOB</th>
+        <th>INVOICE NO</th>
+        <th>SHIPPER</th>
+        <th>PKS</th>
+        <th>GOODS	</th>
+        <th>BE</th>
+        <th>DATE</th>
+        <th>CONTAINER NO.</th>
+        <th>SHIPPING LINE</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr v-for='i in da'>
+        <td>{{i[0]}}</td>
+        <td>{{i[1]}}</td>
+        <td>{{i[2]}}</td>
+        <td>{{i[3]}}</td>
+        <td>{{i[4]}}</td>
+        <td>{{i[5]}}</td>
+        <td>{{i[6]}}</td>
+        <td>{{i[7]}}</td>
+        <td>{{i[8]}}</td>
+        <td>{{i[9]}}</td>
+        <td>{{i[10]}}</td>
+        <td>{{i[11]}}</td>
+        <td>{{i[12]}}</td>
+        <td>{{i[13]}}</td>
+        <td>{{i[14]}}</td>
+      </tr></centre>
+    </table>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue!',
+        da : [
+          ['AFGHAN AGRO COMPANY',	'04-08-2020',	'1695',	'TM003',	'TEJARATI',	'1200',	'PISTA KERNEL',	'8373805',	'4-Aug-20',	'MSCU6566774',	'INTER GULF'],
+          ['B S & SONS',	'07-08-2020',	'1650',	'1957-14',	'DERCO FOODS',	'900',	'INSHELL ALMONDS',	'8392674',	'6-Aug-20',	'HLXU8500730',	'HAPAG'],
+          ['B S & SONS',	'07-08-2020',	'1652',	'1957-16',	'DERCO FOODS',	'900',	'INSHELL ALMONDS',	'8392530',	'6-Aug-20',	'HLBU2086287',	'HAPAG'],
+          ['B S & SONS',	'08-08-2020',	'1647',	'2498',	'SELECT HARVEST',	  '892',	'INSHELL ALMONDS',  '8392530',  '6-Aug-20', 'TCLU1506115',	'EMU / APL']
+        ]
+
+      }
+    })
+  </script>
+</body>
+</html>
