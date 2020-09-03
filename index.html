@@ -15,14 +15,14 @@
     
 
 </nav>
-  <div class="bg-dark" style="margin: 10%;margin-bottom: 0%;align-items:baseline;" >
-  <button class="btn btn-light" style="margin:1%;">Update</button>
+  <div class="bg-dark col-sm-#" style="margin: 10%;padding:1%; margin-bottom: 3%;" >
+    <button class="btn btn-light d-block mr-0 ml-auto">Upload</button>
   </div>
-  <div id="app" style="margin-left:5%;margin-right: 5%;">
+  <div id="app"  class="table-responsive">
 
-    {{ message }}
-    <table>
-      <centre><tr>
+    <!-- {{ message }} -->
+    <center><table class="table-bordered bw-2" style="border-width: 2px;">
+      <tr>
         <th>IMPORTER NAME</th> 			
         <th>DATE</th>
         <th>JOB</th>
@@ -54,7 +54,7 @@
         <td>{{i[12]}}</td>
         <td>{{i[13]}}</td>
         <td>{{i[14]}}</td>
-      </tr></centre>
+      </tr></center>
     </table>
   </div>
 
