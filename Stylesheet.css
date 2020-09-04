@@ -1,0 +1,12 @@
+tr,td,th {
+ padding: 0.5%;
+ width:fit-content;
+ text-align: center;
+}
+th{
+    background-color:rgba(32, 32, 32, 0.918);
+    color: white;
+}
+a{
+    color:black;
+}
