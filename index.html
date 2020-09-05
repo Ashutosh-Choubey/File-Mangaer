@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Vue app</title>
+  <title>DERCO</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
   <link rel="stylesheet" href="stylesheet.css">
@@ -10,83 +10,17 @@
 
 </head>
 <body>
-  <nav class=" navbar navbar-expand-lg fixed-top " style="background-color: #dbeaf6ea;">
+    <nav class=" navbar navbar-expand-lg fixed-top " style="background-color: #dbeaf6ea;">
         
-    <a class="navbar-brand" href="#">DERCO</a>
-    
-
-</nav>
-  <div class="bg-dark col-sm-#" style="margin: 10%;padding:1%;margin-bottom: 3%;" >
-    <div class="form-inline">
-    <select class="form-control mr-2">
-      <option selected>Select Criteria</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-    </select>
-    <input class="form-control mr-2"type="text" placeholder="Search" name="search">
-    <button class="form-control mr-2 btn btn-outline-light shadow-none "type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-    <button class="btn btn-outline-light d-block  mr-0 ml-auto"><i class="fa fa-filter" aria-hidden="true"></i> Filter</button>
-    <button class="btn btn-outline-light d-block  mr-2 ml-3"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
-    
-  </div>
-    
-  </div>
-  <div id="app"  class="table-responsive-sm" style="overflow-x: auto;" >
-
-    <!-- {{ message }} -->
-    <center><table class=" table table-bordered table-striped table-hover table-secondary">
-      <tr>
-        <th>IMPORTER NAME</th> 			
-        <th>DATE</th>
-        <th>JOB</th>
-        <th>INVOICE NO</th>
-        <th>SHIPPER</th>
-        <th>PKS</th>
-        <th>GOODS	</th>
-        <th>BE</th>
-        <th>DATE</th>
-        <th>CONTAINER NO.</th>
-        <th>SHIPPING LINE</th>
-        <th>XYZ</th>
-        <th>ABC</th>
-        <th>LFG</th>
-        <th>LFG</th>
-      </tr>
-      <tr v-for='i in da'>
-        <td><a href="">{{i[0]}}</a></td>
-        <td><a href="">{{i[1]}}</a></td>
-        <td><a href="">{{i[2]}}</a></td>
-        <td><a href="">{{i[3]}}</a></td>
-        <td><a href="">{{i[4]}}</a></td>
-        <td><a href="">{{i[5]}}</a></td>
-        <td><a href="">{{i[6]}}</a></td>
-        <td><a href="">{{i[7]}}</a></td>
-        <td><a href="">{{i[8]}}</a></td>
-        <td><a href="">{{i[9]}}</a></td>
-        <td><a href="">{{i[10]}}</a></td>
-        <td><a href="">{{i[11]}}</a></td>
-        <td><a href="">{{i[12]}}</a></td>
-        <td><a href="">{{i[13]}}</a></td>
-        <td><a href="">{{i[14]}}</a></td>
-      </tr></center>
-    </table>
-  </div>
-
-  <script>
-    var app = new Vue({
-      el: '#app',
-      data: {
-        message: 'Hello Vue!',
-        da : [
-          ['AFGHAN AGRO COMPANY',	'04-08-2020',	'1695',	'TM003',	'TEJARATI',	'1200',	'PISTA KERNEL',	'8373805',	'4-Aug-20',	'MSCU6566774',	'INTER GULF',"ABC","XYZ","ABC","XYZ"],
-          ['B S & SONS',	'07-08-2020',	'1650',	'1957-14',	'DERCO FOODS',	'900',	'INSHELL ALMONDS',	'8392674',	'6-Aug-20',	'HLXU8500730',	'HAPAG',"ABC","XYZ","ABC","XYZ"],
-          ['B S & SONS',	'07-08-2020',	'1652',	'1957-16',	'DERCO FOODS',	'900',	'INSHELL ALMONDS',	'8392530',	'6-Aug-20',	'HLBU2086287',	'HAPAG',"ABC","XYZ","ABC","XYZ"],
-          ['B S & SONS',	'08-08-2020',	'1647',	'2498',	'SELECT HARVEST',	  '892',	'INSHELL ALMONDS',  '8392530',  '6-Aug-20', 'TCLU1506115',	'EMU / APL',"ABC","XYZ","ABC","XYZ"]
-        ]
-
-      }
-    })
-  </script>
-</body>
-</html>
+        <a class="navbar-brand" href="#">DERCO</a>
+    </nav>
+    <div class="col-sm-4" style="border: 2px;margin-top: 18%;margin-left:30%">
+       <center> <h3>Login</h3>
+        <hr class="my-3">
+        <form class="form" action="home.html">
+            <input class="form-control my-2" type="text" name="uname" placeholder="Enter Username">
+            <input class="form-control my-2" type="password" name="pass" placeholder="Password">
+            <input class="form-control btn btn-secondary"type="submit" value="login"> 
+        </form>
+    </center>
+    </div>
