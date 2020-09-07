@@ -1,1 +1,1 @@
-# File-Mangaer
+# File-Manager
