@@ -30,7 +30,6 @@
     <button class="btn btn-outline-light d-block  mr-2 ml-3"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
     
   </div>
-    
   </div>
   <div id="app"  style="overflow-x: auto;" >
 
@@ -72,15 +71,13 @@
       </tr></center>
     </table>
   </div>
-  {% block scripts %}
-  <script >
-    
+  {%block scripts%}
+  <script>
     var app = new Vue({
       el: '#app',
-      delimiters:['[[', ']]'],
+      delimiters: ['[[', ']]'],
       data: {
         message: 'Hello Vue!',
-        
         da : [
           ['AFGHAN AGRO COMPANY',	'04-08-2020',	'1695',	'TM003',	'TEJARATI',	'1200',	'PISTA KERNEL',	'8373805',	'4-Aug-20',	'MSCU6566774',	'INTER GULF',"ABC","XYZ","ABC","XYZ"],
           ['B S & SONS',	'07-08-2020',	'1650',	'1957-14',	'DERCO FOODS',	'900',	'INSHELL ALMONDS',	'8392674',	'6-Aug-20',	'HLXU8500730',	'HAPAG',"ABC","XYZ","ABC","XYZ"],
