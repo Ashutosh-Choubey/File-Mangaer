@@ -71,8 +71,8 @@
       </tr></center>
     </table>
   </div>
-  {%block scripts%}
   <script>
+    {%block scripts%}
     var app = new Vue({
       el: '#app',
       delimiters: ['[[', ']]'],
@@ -87,8 +87,9 @@
 
       }
     })
-         
+    {% endblock %}       
   </script>
- {% endblock %}
+
+ 
 </body>
 </html>
