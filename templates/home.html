@@ -4,7 +4,7 @@
   <title>R B Associates</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-  <link rel="stylesheet" href="stylesheet.css">
+  <link rel="stylesheet" href="../static/css/stylesheet.css">
   <script src="https://cdn.jsdelivr.net/npm/vue"></script> <!-- for Deployment-->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><!-- for Development-->
 
@@ -16,7 +16,7 @@
     
 
 </nav>
-  <div class="bg-dark col-sm-#" style="margin: 10%;padding:1%;margin-bottom: 3%;" >
+  <div class="col-sm-# rounded" style="margin: 10%;padding:1%;margin-bottom: 3%;background-color: #6cb0e7;" >
     <div class="form-inline">
     <select class="form-control mr-2">
       <option selected>Select Criteria</option>
@@ -32,20 +32,20 @@
   </div>
     
   </div>
-  <div id="app"  class="table-responsive-sm" style="overflow-x: auto;" >
+  <div id="app"  style="overflow-x: auto;" >
 
     <!-- {{ message }} -->
-    <center><table class=" table table-bordered table-striped table-hover table-secondary">
+    <center><table class="rounded">
       <tr>
         <th>IMPORTER NAME</th> 			
-        <th>DATE OF PUNCHING</th>
+        <th>DATE</th>
         <th>JOB</th>
         <th>INVOICE NO</th>
         <th>SHIPPER</th>
         <th>PKS</th>
         <th>GOODS	</th>
         <th>BE</th>
-        <th>DATE OF ARRIVAL</th>
+        <th>DATE</th>
         <th>CONTAINER NO.</th>
         <th>SHIPPING LINE</th>
         <th>XYZ</th>
@@ -53,33 +53,34 @@
         <th>LFG</th>
         <th>LFG</th>
       </tr>
-      
       <tr v-for='i in da'>
-        <td><a href="">[[i[0] ]]</a></td>
-        <td><a href="">[[i[1] ]]</a></td>
-        <td><a href="">[[i[2] ]]</a></td>
-        <td><a href="">[[i[3] ]]</a></td>
-        <td><a href="">[[i[4] ]]</a></td>
-        <td><a href="">[[i[5] ]]</a></td>
-        <td><a href="">[[i[6] ]]</a></td>
-        <td><a href="">[[i[7] ]]</a></td>
-        <td><a href="">[[i[8] ]]</a></td>
-        <td><a href="">[[i[9] ]]</a></td>
-        <td><a href="">[[i[10] ]]</a></td>
-        <td><a href="">[[i[11] ]]</a></td>
-        <td><a href="">[[i[12] ]]</a></td>
-        <td><a href="">[[i[13] ]]</a></td>
-        <td><a href="">[[i[14] ]]</a></td>
+        <td><a href="">[[i[0]]]</a></td>
+        <td><a href="">[[i[1]]]</a></td>
+        <td><a href="">[[i[2]]]</a></td>
+        <td><a href="">[[i[3]]]</a></td>
+        <td><a href="">[[i[4]]]</a></td>
+        <td><a href="">[[i[5]]]</a></td>
+        <td><a href="">[[i[6]]]</a></td>
+        <td><a href="">[[i[7]]]</a></td>
+        <td><a href="">[[i[8]]]</a></td>
+        <td><a href="">[[i[9]]]</a></td>
+        <td><a href="">[[i[10]]]</a></td>
+        <td><a href="">[[i[11]]]</a></td>
+        <td><a href="">[[i[12]]]</a></td>
+        <td><a href="">[[i[13]]]</a></td>
+        <td><a href="">[[i[14]]]</a></td>
       </tr></center>
     </table>
   </div>
   {% block scripts %}
   <script >
+    
     var app = new Vue({
       el: '#app',
+      delimiters:['[[', ']]'],
       data: {
         message: 'Hello Vue!',
-        delimiter: ['[[',']]'],
+        
         da : [
           ['AFGHAN AGRO COMPANY',	'04-08-2020',	'1695',	'TM003',	'TEJARATI',	'1200',	'PISTA KERNEL',	'8373805',	'4-Aug-20',	'MSCU6566774',	'INTER GULF',"ABC","XYZ","ABC","XYZ"],
           ['B S & SONS',	'07-08-2020',	'1650',	'1957-14',	'DERCO FOODS',	'900',	'INSHELL ALMONDS',	'8392674',	'6-Aug-20',	'HLXU8500730',	'HAPAG',"ABC","XYZ","ABC","XYZ"],
@@ -89,7 +90,8 @@
 
       }
     })
+         
   </script>
-  {% endblock %}
+ {% endblock %}
 </body>
 </html>
