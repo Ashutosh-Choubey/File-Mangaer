@@ -2,10 +2,18 @@
     background-color:#b9dbf7ea;
 }
 table,tr,td,th {
- width:fit-content;
+ 
  text-align: center;
- padding:10px;
  border: 1px solid black;;
+}
+table{
+    margin: 5px;
+    overflow:scroll;
+    white-space: nowrap;
+}
+td{
+    width:fit-content;
+    padding:8px;
 }
 th{
     background-color: #6cb0e7;
@@ -19,3 +27,18 @@ tr:hover td{
 th:hover{
     background-color: #b9dbf7ea;
 }
+::-webkit-scrollbar {
+height:8px;
+border:1px solid #d5d5d5;
+margin:2px;
+}
+::-webkit-scrollbar-track {
+    border-radius: 2px;
+    background: #eeeeee;
+    margin: 2px;
+  }
+::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #6cb0e7;
+    margin:2px;
+  }

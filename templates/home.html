@@ -25,10 +25,18 @@
       <option value="3">Three</option>
     </select>
     <input class="form-control mr-2"type="text" placeholder="Search" name="search">
-    <button class="form-control mr-2 btn btn-outline-light shadow-none "type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-    <button class="btn btn-outline-light d-block  mr-0 ml-auto"><i class="fa fa-filter" aria-hidden="true"></i> Filter</button>
-    <a class="btn btn-outline-light d-block  mr-2 ml-3" href="upload.html"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
-    
+    <button class="form-control mr-auto btn btn-outline-light shadow-none "type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+    <div class="dropdown">
+      <button class="btn btn-outline-light dropdown-toggle mr-0 ml-auto" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-filter" aria-hidden="true"></i> Filter 
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item active" href="#" active>Pending</a>
+        <a class="dropdown-item" href="#">Delayed</a>
+        <a class="dropdown-item" href="#">Completed</a>
+      </div>
+    </div>
+    <a class="btn btn-outline-light d-block  mr-0 ml-2" href="upload.html"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
   </div>
   </div>
   <div id="app"  style="overflow-x: auto;" >
@@ -36,21 +44,22 @@
     <!-- {{ message }} -->
     <center><table class="rounded">
       <tr>
-        <th>IMPORTER NAME</th> 			
-        <th>DATE</th>
-        <th>JOB</th>
-        <th>INVOICE NO</th>
-        <th>SHIPPER</th>
-        <th>PKS</th>
-        <th>GOODS	</th>
-        <th>BE</th>
-        <th>DATE</th>
-        <th>CONTAINER NO.</th>
-        <th>SHIPPING LINE</th>
-        <th>XYZ</th>
-        <th>ABC</th>
-        <th>LFG</th>
-        <th>LFG</th>
+        <th><button class="btn font-weight-bold"type="button">IMPORTER NAME</button></th> 			
+        <th><button class="btn font-weight-bold"type="button">DATE</button></th>
+        <th><button class="btn font-weight-bold"type="button">JOB</button></th>
+        <th><button class="btn font-weight-bold"type="button">INVOICE NO</button></th>
+        <th><button class="btn font-weight-bold"type="button">SHIPPER</button></th>
+        <th><button class="btn font-weight-bold"type="button">PKS</button></th>
+        <th><button class="btn font-weight-bold"type="button">GOODS</button>	</th>
+        <th><button class="btn font-weight-bold"type="button">BE</button></th>
+        <th><button class="btn font-weight-bold"type="button">DATE</button></th>
+        <th><button class="btn font-weight-bold"type="button">CONTAINER NO.</button></th>
+        <th><button class="btn font-weight-bold"type="button">SHIPPING LINE</button></th>
+        <th><button class="btn font-weight-bold"type="button">XYZ</button></th>
+        <th><button class="btn font-weight-bold"type="button">ABC</button></th>
+        <th><button class="btn font-weight-bold"type="button">LFG</button></th>
+        <th><button class="btn font-weight-bold"type="button">LFG</button></th>
+        <th><button class="btn font-weight-bold"type="button">LFG</button></th>
       </tr>
       <tr v-for='i in da'>
         <td><a href="">[[i[0] ]]</a></td>
@@ -91,6 +100,9 @@
            
   </script>
   {% endblock %}
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
  
 </body>
 </html>
