@@ -24,14 +24,20 @@ def index():
         cursor.execute("INSERT INTO login_creds (Login_Id, Password) VALUES(%s, %s);",(name, password_details))
         mysql.connection.commit()
         cursor.close()
-        return redirect('/home') 
+        return redirect('/home')
     return render_template('index.html')
 
 @app.route('/home')
 def home():
     return render_template('home.html')
 
+@app.route('/upload')
+def upload():
+    return render_template('upload.html')
 
+@app.route('/my_redirect')
+def my_redirect():
+    return redirect(url_for('upload',_anchor='my_anchor'))
 
 if __name__ == "__main__":
     app.run(debug=True)
