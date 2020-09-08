@@ -53,26 +53,27 @@
         <th>LFG</th>
       </tr>
       <tr v-for='i in da'>
-        <td><a href="">[[i[0]]]</a></td>
-        <td><a href="">[[i[1]]]</a></td>
-        <td><a href="">[[i[2]]]</a></td>
-        <td><a href="">[[i[3]]]</a></td>
-        <td><a href="">[[i[4]]]</a></td>
-        <td><a href="">[[i[5]]]</a></td>
-        <td><a href="">[[i[6]]]</a></td>
-        <td><a href="">[[i[7]]]</a></td>
-        <td><a href="">[[i[8]]]</a></td>
-        <td><a href="">[[i[9]]]</a></td>
-        <td><a href="">[[i[10]]]</a></td>
-        <td><a href="">[[i[11]]]</a></td>
-        <td><a href="">[[i[12]]]</a></td>
-        <td><a href="">[[i[13]]]</a></td>
-        <td><a href="">[[i[14]]]</a></td>
+        <td><a href="">[[i[0] ]]</a></td>
+        <td><a href="">[[i[1] ]]</a></td>
+        <td><a href="">[[i[2] ]]</a></td>
+        <td><a href="">[[i[3] ]]</a></td>
+        <td><a href="">[[i[4] ]]</a></td>
+        <td><a href="">[[i[5] ]]</a></td>
+        <td><a href="">[[i[6] ]]</a></td>
+        <td><a href="">[[i[7] ]]</a></td>
+        <td><a href="">[[i[8] ]]</a></td>
+        <td><a href="">[[i[9] ]]</a></td>
+        <td><a href="">[[i[10] ]]</a></td>
+        <td><a href="">[[i[11] ]]</a></td>
+        <td><a href="">[[i[12] ]]</a></td>
+        <td><a href="">[[i[13] ]]</a></td>
+        <td><a href="">[[i[14] ]]</a></td>
       </tr></center>
     </table>
   </div>
+  {%block scripts%}
   <script>
-    {%block scripts%}
+    
     var app = new Vue({
       el: '#app',
       delimiters: ['[[', ']]'],
@@ -87,9 +88,9 @@
 
       }
     })
-    {% endblock %}       
+           
   </script>
-
+  {% endblock %}
  
 </body>
 </html>
