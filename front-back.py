@@ -28,8 +28,17 @@ def index():
         return redirect('/home')
     return render_template('index.html')
 
-@app.route('/home')
+@app.route('/home', methods=['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        search_details = request.form
+        criteria = search_details['Criteria']
+        search_text = search_details['search']
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT * FROM login_creds")
+        mysql.connection.commit()
+        cursor.close()
+        return redirect('/home')
     return render_template('home.html')
 
 @app.route('/upload', methods=['GET','POST'])
