@@ -30,7 +30,7 @@ def index():
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    if request.method == 'POST':
+    if request.method == 'GET':
         search_details = request.form
         criteria = search_details['Criteria']
         search_text = search_details['search']
@@ -38,7 +38,6 @@ def home():
         cursor.execute("SELECT * FROM login_creds")
         mysql.connection.commit()
         cursor.close()
-        return redirect('/home')
     return render_template('home.html')
 
 @app.route('/upload', methods=['GET','POST'])
