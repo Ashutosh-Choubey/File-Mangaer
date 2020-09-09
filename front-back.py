@@ -12,7 +12,6 @@ app.config['MYSQLDB_PASSWORD'] = db['mysql_password']
 app.config['MYSQL_DB'] = db['mysql_db']
 app.config['MYSQL_UPLOAD_FILES'] = db['mysql_fileStored']
 
-ALLOWED_EXTENSIONS = {'pdf', 'img'}
 mysql = MySQL(app)
 
 
