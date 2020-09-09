@@ -37,6 +37,16 @@ def home():
 @app.route('/upload', methods=['GET','POST'])
 def upload():
     if request.method == 'POST':
+        # Example code for file saving 
+        ''' f=request.files['d1'] #place name of the input field
+            f.save('uploads/'+ file.filename) #uploads is a pre-existing folder which you have to create manually and the file will be saved in that folder only.
+        '''
+        # Example code end for file saving
+        
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
         file = request.files['file']
         # if user does not select file, browser also
         # submit an empty part without filename
