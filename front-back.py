@@ -36,22 +36,21 @@ def home():
 
 @app.route('/upload', methods=['GET','POST'])
 def upload():
-    if request.method =='POST':
-        upload_material = request.form
-        for i in range(1,19):
-            file_name = request.form['f{}'.format(i)]
-            field_name = request.form['d{}'.format(i)]
+    if request.method == 'POST':
+        # check if the post request has the file part
         if 'file' not in request.files:
-            flash('Not allowed!')
+            flash('No file part')
             return redirect(request.url)
         file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
         if file.filename == '':
-            flash('No file selected!')
+            flash('No selected file')
             return redirect(request.url)
-        if file and file_upload(file.filename):
+        if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['MYSQL_UPLOAD_FILES'], filename))
-            return redirect(url_for('upload', filename=filename)) 
+            return redirect(url_for('upload_file',filename=filename))
 
     return render_template('upload.html')
 
@@ -59,9 +58,37 @@ def upload():
 def my_redirect():
     return redirect(url_for('upload',_anchor='upload_files'))
 
-def file_upload(filename):
+def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+#--------------------------------------------------------TRIAL--------------------------------------------------#
+'''
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['MYSQL_UPLOAD_FILES'], filename))
+            return redirect(url_for('upload_file',filename=filename))
+    return render_template('upload.html')
+
+'''
+
 
 if __name__ == "__main__":
     app.run(debug=True)
