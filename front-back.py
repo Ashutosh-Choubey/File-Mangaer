@@ -41,8 +41,8 @@ def home():
     cursor.execute('SHOW COLUMNS FROM imports')
     col_data = cursor.fetchall()
     cursor.close() 
+    
     if request.method == 'POST':
-        
         if 'search' in request.form:
             print('Entered loop')
             crit_res = request.form['Criteria']
@@ -65,52 +65,19 @@ def home():
 def upload():
     if request.method == 'POST':
         #if 'Upload' in request.form:
-        print('ENtered loop')
-        f = request.files['d1'] 
-        f.save('FileUp/'  + f.filename) 
+        print('Entered loop')
+        for i in range(1,3):
+            f = request.files['d{}'.format(i)] 
+            f.save('FileUp/'  + f.filename) 
         cursor = mysql.connection.cursor()
         mysql.connection.commit()
-        cursor.close()
+        cursor.close()  
         return redirect('/home')
     return render_template('upload.html')
 
 @app.route('/my_redirect')
 def my_redirect():
     return redirect(url_for('upload',_anchor='upload_files'))
-
-@app.route('/search', methods=['GET', 'POST'])
-def search_results(search):
-    results = []
-    search_string = search.data['search']
-    
-    if search_string:
-        
-        if search.data['select'] == 'Name':
-            qry = db_session.query(Name).filter(Album.name.contains(search_string))                                 
-            results = [item[0] for item in qry.all()]
-
-        elif search.data['select'] == 'Album':
-            qry = db_session.query(Album).filter(Album.title.contains(search_string))
-            results = qry.all()
-        elif search.data['select'] == 'Publisher':
-            qry = db_session.query(Album).filter(Album.publisher.contains(search_string))
-            results = qry.all()
-        else:
-            qry = db_session.query(Album)
-            results = qry.all()
-    else:
-        qry = db_session.query(Album)
-        results = qry.all()
-    if not results:
-        flash('No results found!')
-        return redirect('/')    
-    else:
-        # display results
-        table = Results(results)
-        table.border = True
-        return render_template('results.html', table=table)
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
