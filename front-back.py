@@ -22,25 +22,30 @@ def index():
         name = user_details['uname']
         password_details = request.form['pass']
         cursor = mysql.connection.cursor()
-        cursor.execute("INSERT INTO login_creds (Login_Id, Password) VALUES(%s, %s);",(name, password_details))
+        cursor.execute("INSERT INTO accounts (userid, pass) VALUES(%s, %s);",(name, password_details))
         mysql.connection.commit()
         cursor.close()
         return redirect('/home')
     return render_template('index.html')
 
+
+
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        if 'Criteria' in request.form:
-            redirect('/search')
-            
-        elif 'search' in request.form:
-            redirect('/search')
-        
+        if 'search' in request.form:
+            search_res = request.form['search']
+            cursor = mysql.connection.cursor()
+            cursor.execute('SELECT impname,job from imports WHERE impname like %s OR job like %s',(search_res, search_res))
+            mysql.connection.commit()
+            cursor.close()
         elif 'Filter' in request.form:
             redirect('/search')
 
     return render_template('home.html')
+
+
+
 
 @app.route('/upload', methods=['GET','POST'])
 def upload():
@@ -48,7 +53,14 @@ def upload():
         for i in range(1,19): 
             f = request.form['d{}'.format(i)] #place name of the input field
             f.save(app.config['MYSQL_UPLOAD_FILES']  + file.filename) #uploads is a pre-existing folder which you have to create manually and the file will be saved in that folder only.
+            
+            cursor = mysql.connection.cursor()
+            cursor.execute('INSERT INTO  imports(impname, p_date, job, invoice_no, shipper, pks, be, c_date, container_no, ship_line, job_status, job_delayed, det1, det2, det3, det4, det5, det6) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
+                                                ,(request.form['d{}'.format(i)] for i in range(1, 19)))
+            mysql.connection.commit()
+            cursor.close()
             redirect('/home')
+
     return render_template('upload.html')
 
 @app.route('/my_redirect')
@@ -59,10 +71,13 @@ def my_redirect():
 def search_results(search):
     results = []
     search_string = search.data['search']
+    
     if search_string:
+        
         if search.data['select'] == 'Name':
             qry = db_session.query(Name).filter(Album.name.contains(search_string))                                 
             results = [item[0] for item in qry.all()]
+
         elif search.data['select'] == 'Album':
             qry = db_session.query(Album).filter(Album.title.contains(search_string))
             results = qry.all()
