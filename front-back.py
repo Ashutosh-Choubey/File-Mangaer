@@ -68,7 +68,6 @@ def upload():
         print('ENtered loop')
         f = request.files['d1'] 
         f.save('FileUp/'  + f.filename) 
-        
         cursor = mysql.connection.cursor()
         mysql.connection.commit()
         cursor.close()
