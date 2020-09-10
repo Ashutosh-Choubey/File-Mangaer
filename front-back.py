@@ -30,21 +30,15 @@ def index():
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    if request.method == 'GET':
-        search_details = request.form
-        criteria = search_details['Criteria']
-        search_text = search_details['search']
-        cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM login_creds")
-        mysql.connection.commit()
-        cursor.close()
     if request.method == 'POST':
         if 'Criteria' in request.form:
             redirect('/search')
-        
+            
         elif 'search' in request.form:
+            redirect('/search')
         
         elif 'Filter' in request.form:
+            redirect('/search')
 
     return render_template('home.html')
 
@@ -67,17 +61,13 @@ def search_results(search):
     search_string = search.data['search']
     if search_string:
         if search.data['select'] == 'Name':
-            qry = db_session.query(, ).filter(
-                ).filter(
-                    ..contains(search_string))
+            qry = db_session.query(Name).filter(Album.name.contains(search_string))                                 
             results = [item[0] for item in qry.all()]
         elif search.data['select'] == 'Album':
-            qry = db_session.query(Album).filter(
-                Album.title.contains(search_string))
+            qry = db_session.query(Album).filter(Album.title.contains(search_string))
             results = qry.all()
         elif search.data['select'] == 'Publisher':
-            qry = db_session.query(Album).filter(
-                Album.publisher.contains(search_string))
+            qry = db_session.query(Album).filter(Album.publisher.contains(search_string))
             results = qry.all()
         else:
             qry = db_session.query(Album)
