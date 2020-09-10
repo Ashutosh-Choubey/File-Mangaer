@@ -56,7 +56,7 @@ def upload():
             
             cursor = mysql.connection.cursor()
             cursor.execute('INSERT INTO  imports(impname, p_date, job, invoice_no, shipper, pks, be, c_date, container_no, ship_line, job_status, job_delayed, det1, det2, det3, det4, det5, det6) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
-                                                ,(request.form['d{}'.format(i)] for i in range(1, 19)))
+                                                ,([request.form['d{}'.format(i)]] for i in range(1, 19))) 
             mysql.connection.commit()
             cursor.close()
             redirect('/home')
