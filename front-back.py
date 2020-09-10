@@ -22,27 +22,41 @@ def index():
         name = user_details['uname']
         password_details = request.form['pass']
         cursor = mysql.connection.cursor()
-        cursor.execute("INSERT INTO accounts (userid, pass) VALUES(%s, %s);",(name, password_details))
-        mysql.connection.commit()
+        cursor.execute("SELECT pass from accounts where userid = %s;"%(name))
+        passw = cursor.fetchall()
+        print(passw[0][0])
+        if password_details == passw[0][0]:
+            print("SUCCESS")
+            return redirect('/home')
         cursor.close()
-        return redirect('/home')
     return render_template('index.html')
 
 
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
+    cursor = mysql.connection.cursor()
+    cursor.execute('SELECT * from imports')
+    temp_data = cursor.fetchall()
+    cursor.execute('SHOW COLUMNS FROM imports')
+    col_data = cursor.fetchall()
+    cursor.close() 
     if request.method == 'POST':
+        print('Entered pre-loop')
         if 'search' in request.form:
+            print('Entered loop')
+            crit_res = request.form['Criteria']
             search_res = request.form['search']
             cursor = mysql.connection.cursor()
-            cursor.execute('SELECT impname,job from imports WHERE impname like %s OR job like %s',(search_res, search_res))
-            mysql.connection.commit()
+            cursor.execute('SELECT * from imports WHERE %s like %s'%(crit_res, search_res))
+            print(crit_res)
+            print(search_res)
+            temp_data = cursor.fetchall()
+            print(temp_data)
+            print(type(temp_data))
             cursor.close()
-        elif 'Filter' in request.form:
-            redirect('/search')
 
-    return render_template('home.html')
+    return render_template('home.html', temp_data=temp_data, col_data=col_data)
 
 
 

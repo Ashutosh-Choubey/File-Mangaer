@@ -17,14 +17,16 @@
 
   <div class="col-sm-# rounded" style="margin: 10%;padding:1%;margin-bottom: 3%;background-color: #6cb0e7;" >
     <div class="form-inline">
-    <select class="form-control mr-2" name='Criteria'>
-      <option selected>Select Criteria</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-    </select>  
-    <input class="form-control mr-2" type="text" placeholder="Search" name="search">
-    <button class="form-control mr-auto btn btn-outline-light shadow-none "type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+    <form class ="form" method ="POST" action="">
+      <select class="form-control mr-2" name='Criteria'>
+        <option selected>Select Criteria</option>
+        <option value="impname">impname</option>
+        <option value="job">job</option>
+        <option value="shipper">shipper</option>
+      </select>
+      <input class="form-control mr-2" type="text" placeholder="Search" name="search">
+      <button class="form-control mr-auto btn btn-outline-light shadow-none "type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+      </form>
     <div class="dropdown">
       <button class="btn btn-outline-light dropdown-toggle mr-0 ml-auto" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name='Filter'>
         <i class="fa fa-filter" aria-hidden="true"></i> Filter 
@@ -62,7 +64,7 @@
       </tr>
       <tr v-for='i in da'>
         <td><a href="">[[i[0] ]]</a></td>
-        <td><a href="">[[i[1] ]]</a></td>
+        <td><a href="">[[i[1] ]] </a></td>
         <td><a href="">[[i[2] ]]</a></td>
         <td><a href="">[[i[3] ]]</a></td>
         <td><a href="">[[i[4] ]]</a></td>
@@ -87,13 +89,8 @@
       delimiters: ['[[', ']]'],
       data: {
         message: 'Hello Vue!',
-        da : [
-          ['AFGHAN AGRO COMPANY',	'04-08-2020',	'1695',	'TM003',	'TEJARATI',	'1200',	'PISTA KERNEL',	'8373805',	'4-Aug-20',	'MSCU6566774',	'INTER GULF',"ABC","XYZ","ABC","XYZ"],
-          ['B S & SONS',	'07-08-2020',	'1650',	'1957-14',	'DERCO FOODS',	'900',	'INSHELL ALMONDS',	'8392674',	'6-Aug-20',	'HLXU8500730',	'HAPAG',"ABC","XYZ","ABC","XYZ"],
-          ['B S & SONS',	'07-08-2020',	'1652',	'1957-16',	'DERCO FOODS',	'900',	'INSHELL ALMONDS',	'8392530',	'6-Aug-20',	'HLBU2086287',	'HAPAG',"ABC","XYZ","ABC","XYZ"],
-          ['B S & SONS',	'08-08-2020',	'1647',	'2498',	'SELECT HARVEST',	  '892',	'INSHELL ALMONDS',  '8392530',  '6-Aug-20', 'TCLU1506115',	'EMU / APL',"ABC","XYZ","ABC","XYZ"]
-        ]
-
+        col: {{col_data|tojson}},
+        da : {{temp_data|tojson}} 
       }
     })
            

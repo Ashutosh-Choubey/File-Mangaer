@@ -1,6 +1,6 @@
 mysql_host: 'localhost'
 mysql_user: 'root'
-mysql_password: 'Hr0cketss@12357'
+mysql_password: ''
 mysql_db: 'RBA'
 mysql_fileStored: '/run/media/hrushitj/17446b6e-4537-4fd5-93af-783d2f8754b3/Capstone/File-Mangaer/FIles Uploaded/' 
 DEBUG: True
