@@ -38,6 +38,14 @@ def home():
         cursor.execute("SELECT * FROM login_creds")
         mysql.connection.commit()
         cursor.close()
+    if request.method == 'POST':
+        if 'Criteria' in request.form:
+            redirect('/search')
+        
+        elif 'search' in request.form:
+        
+        elif 'Filter' in request.form:
+
     return render_template('home.html')
 
 @app.route('/upload', methods=['GET','POST'])
@@ -58,10 +66,10 @@ def search_results(search):
     results = []
     search_string = search.data['search']
     if search_string:
-        if search.data['select'] == 'Artist':
-            qry = db_session.query(Album, Artist).filter(
-                Artist.id==Album.artist_id).filter(
-                    Artist.name.contains(search_string))
+        if search.data['select'] == 'Name':
+            qry = db_session.query(, ).filter(
+                ).filter(
+                    ..contains(search_string))
             results = [item[0] for item in qry.all()]
         elif search.data['select'] == 'Album':
             qry = db_session.query(Album).filter(
