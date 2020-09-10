@@ -42,7 +42,7 @@ def home():
     col_data = cursor.fetchall()
     cursor.close() 
     if request.method == 'POST':
-        print('Entered pre-loop')
+        
         if 'search' in request.form:
             print('Entered loop')
             crit_res = request.form['Criteria']
@@ -64,17 +64,15 @@ def home():
 @app.route('/upload', methods=['GET','POST'])
 def upload():
     if request.method == 'POST':
-        for i in range(1,19): 
-            f = request.form['d{}'.format(i)] #place name of the input field
-            f.save(app.config['MYSQL_UPLOAD_FILES']  + file.filename) #uploads is a pre-existing folder which you have to create manually and the file will be saved in that folder only.
-            
-            cursor = mysql.connection.cursor()
-            cursor.execute('INSERT INTO  imports(impname, p_date, job, invoice_no, shipper, pks, be, c_date, container_no, ship_line, job_status, job_delayed, det1, det2, det3, det4, det5, det6) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)'
-                                                ,([request.form['d{}'.format(i)]] for i in range(1, 19))) 
-            mysql.connection.commit()
-            cursor.close()
-            redirect('/home')
-
+        #if 'Upload' in request.form:
+        print('ENtered loop')
+        f = request.files['d1'] 
+        f.save('FileUp/'  + f.filename) 
+        
+        cursor = mysql.connection.cursor()
+        mysql.connection.commit()
+        cursor.close()
+        return redirect('/home')
     return render_template('upload.html')
 
 @app.route('/my_redirect')
