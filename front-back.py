@@ -57,7 +57,6 @@ def home():
             cursor.close()
 
         if 'logout' in request.form:
-            print('Entered Loop!!!')
             return redirect('/')
 
     return render_template('home.html', temp_data=temp_data, col_data=col_data)
@@ -69,8 +68,6 @@ def home():
 def upload():
 
     if request.method == 'POST':
-        print('Entered loop')
-
         for i in range(1,2):
             f = request.files['d{}'.format(i)] 
             f.save('FileUp/'  + 'd{}.pdf'.format(i)) 
@@ -84,10 +81,6 @@ def upload():
 @app.route('/my_redirect')
 def my_redirect():
     return redirect(url_for('upload',_anchor='upload_files'))
-
-@app.route('/my_redirect2')
-def my_redirect2():
-    return render_template('index.html')
 
 
 @app.route('/docview', methods=['GET', 'POST'])
