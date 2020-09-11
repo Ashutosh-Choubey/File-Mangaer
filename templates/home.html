@@ -71,31 +71,31 @@
         <th><button class="btn font-weight-bold"type="button">RBA BILL PART A</button></th>
         <th><button class="btn font-weight-bold"type="button">RBA BILL PART B</button></th>    
       </tr>
-
-      <tr v-for='i in da'>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[0] ]])">[[i[0] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[1] ]])">[[i[1] ]] </a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[2] ]])">[[i[2] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[3] ]])">[[i[3] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[4] ]])">[[i[4] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[5] ]])">[[i[5] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[6] ]])">[[i[6] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[7] ]])">[[i[7] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[8] ]])">[[i[8] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[9] ]])">[[i[9] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[10] ]])">[[i[10] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[11] ]])">[[i[11] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[12] ]])">[[i[12] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[13] ]])">[[i[13] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[14] ]])">[[i[14] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[15] ]])">[[i[15] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[16] ]])">[[i[16] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[17] ]])">[[i[17] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[18] ]])">[[i[18] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[19] ]])">[[i[19] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[20] ]])">[[i[20] ]]</a></td>        
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[21] ]])">[[i[21] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[22] ]])">[[i[22] ]]</a></td>
+ 
+      <tr v-for='i in da'> 
+        <td><a href="{{ url_for('docview') }}">[[i[0] ]] </a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[1] ]] </a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[2] ]] </a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[3] ]] </a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[4] ]] </a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[5] ]] </a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[6] ]] </a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[7] ]] </a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[8] ]] </a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[9] ]] </a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[10] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[11] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[12] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[13] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[14] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[15] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[16] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[17] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[18] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[19] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[20] ]]</a></td>        
+        <td><a href="{{ url_for('docview') }}">[[i[21] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[22] ]]</a></td>
       </tr></center>
     </table>
   </div>

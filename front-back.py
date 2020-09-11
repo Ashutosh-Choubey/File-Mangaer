@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect  
+from flask import Flask, render_template, url_for, request, redirect, send_file  
 from flask_mysqldb import MySQL 
 import yaml 
 
@@ -63,21 +63,30 @@ def home():
 
 @app.route('/upload', methods=['GET','POST'])
 def upload():
+
     if request.method == 'POST':
-        #if 'Upload' in request.form:
         print('Entered loop')
-        for i in range(1,3):
+
+        for i in range(1,2):
             f = request.files['d{}'.format(i)] 
-            f.save('FileUp/'  + f.filename) 
+            f.save('FileUp/'  + 'd{}.pdf'.format(i)) 
         cursor = mysql.connection.cursor()
         mysql.connection.commit()
         cursor.close()  
         return redirect('/home')
+    
     return render_template('upload.html')
 
 @app.route('/my_redirect')
 def my_redirect():
     return redirect(url_for('upload',_anchor='upload_files'))
+
+
+@app.route('/docview', methods=['GET', 'POST'])
+def docview():
+    with open('/run/media/hrushitj/17446b6e-4537-4fd5-93af-783d2f8754b3/Capstone/File-Mangaer/FileUp/d1.pdf', 'rb') as static_file:
+        return send_file(static_file, attachment_filename='d1.pdf')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
