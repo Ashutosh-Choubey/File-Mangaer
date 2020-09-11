@@ -32,14 +32,16 @@
       <button class="form-control  mr-5 btn btn-outline-light shadow-none "type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
       </form> 
     <div class="dropdown mr-0 ml-auto">
-      <button class="btn btn-outline-light  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name='Filter'>
-        <i class="fa fa-filter" aria-hidden="true"></i> Filter 
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item active" href="#" active>Pending</a>
-        <a class="dropdown-item" href="#">Delayed</a>
-        <a class="dropdown-item" href="#">Completed</a>
-      </div>
+      <form method='POST'>
+        <button class="btn btn-outline-light  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name='Filter'>
+          <i class="fa fa-filter" aria-hidden="true"></i> Filter 
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item active" href="#" active value="Pending">Pending</a>
+          <a class="dropdown-item" href="#" value="Delayed">Delayed</a>
+          <a class="dropdown-item" href="#" value="Completed">Completed</a>
+        </div>
+      </form>
     </div>
     <a class="btn btn-outline-light d-inline-block mr-0 ml-2" href="{{ url_for('upload', _anchor='upload_files') }}"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
   </div>

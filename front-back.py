@@ -11,8 +11,8 @@ app.config['MYSQLDB_USER'] = db['mysql_user']
 app.config['MYSQLDB_PASSWORD'] = db['mysql_password']
 app.config['MYSQL_DB'] = db['mysql_db']
 app.config['MYSQL_UPLOAD_FILES'] = db['mysql_fileStored']
-
 mysql = MySQL(app)
+
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -58,9 +58,21 @@ def home():
 
         if 'logout' in request.form:
             return redirect('/')
+        
+        if 'Filter' in request.form:
+            status_pending = request.form['Pending']
+            status_completed = request.form['Completed']
+            status_delayed = request.form['Delayed']
+            cursor = mysql.connection.cursor()
+            cursor.execute('SELECT * from imports WHERE %s like %s'%(crit_res, search_res))
+            print(crit_res)
+            print(search_res)
+            temp_data = cursor.fetchall()
+            print(temp_data)
+            print(type(temp_data))
+            cursor.close()
 
     return render_template('home.html', temp_data=temp_data, col_data=col_data)
-
 
 
 
@@ -81,6 +93,7 @@ def upload():
 @app.route('/my_redirect')
 def my_redirect():
     return redirect(url_for('upload',_anchor='upload_files'))
+
 
 
 @app.route('/docview', methods=['GET', 'POST'])
