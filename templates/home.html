@@ -13,6 +13,7 @@
   <nav class=" navbar navbar-expand-lg fixed-top " style="background-color: #dbeaf6ea;">
         
     <a class="navbar-brand" href="#">R B Associates</a>
+    <button class="ml-auto mr-2 btn btn-outline-danger"><i class="fas fa-power-off"></i></button>
 </nav>
 
   <div class="col-sm-# rounded" style="margin: 10%;padding:1%;margin-bottom: 3%;background-color: #6cb0e7;" >
@@ -25,10 +26,10 @@
         <option value="shipper">shipper</option>
       </select>
       <input class="form-control mr-2" type="text" placeholder="Search" name="search">
-      <button class="form-control mr-auto btn btn-outline-light shadow-none "type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-      </form>
-    <div class="dropdown">
-      <button class="btn btn-outline-light dropdown-toggle mr-0 ml-auto" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name='Filter'>
+      <button class="form-control  mr-5 btn btn-outline-light shadow-none "type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+      </form> 
+    <div class="dropdown mr-0 ml-auto">
+      <button class="btn btn-outline-light  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name='Filter'>
         <i class="fa fa-filter" aria-hidden="true"></i> Filter 
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -37,48 +38,86 @@
         <a class="dropdown-item" href="#">Completed</a>
       </div>
     </div>
-    <a class="btn btn-outline-light d-block  mr-0 ml-2" href="{{ url_for('upload', _anchor='upload_files') }}"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
+    <a class="btn btn-outline-light d-inline-block mr-0 ml-2" href="{{ url_for('upload', _anchor='upload_files') }}"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
   </div>
   </div>
+  
   <div id="app"  style="overflow-x: auto;" >
 
     <!-- {{ message }} -->
     <center><table class="rounded">
       <tr>
-        <th><button class="btn font-weight-bold"type="button">IMPORTER NAME</button></th> 			
-        <th><button class="btn font-weight-bold"type="button">DATE</button></th>
-        <th><button class="btn font-weight-bold"type="button">JOB</button></th>
-        <th><button class="btn font-weight-bold"type="button">INVOICE NO</button></th>
-        <th><button class="btn font-weight-bold"type="button">SHIPPER</button></th>
-        <th><button class="btn font-weight-bold"type="button">PKS</button></th>
-        <th><button class="btn font-weight-bold"type="button">GOODS</button>	</th>
-        <th><button class="btn font-weight-bold"type="button">BE</button></th>
-        <th><button class="btn font-weight-bold"type="button">DATE</button></th>
-        <th><button class="btn font-weight-bold"type="button">CONTAINER NO.</button></th>
-        <th><button class="btn font-weight-bold"type="button">SHIPPING LINE</button></th>
-        <th><button class="btn font-weight-bold"type="button">XYZ</button></th>
-        <th><button class="btn font-weight-bold"type="button">ABC</button></th>
-        <th><button class="btn font-weight-bold"type="button">LFG</button></th>
-        <th><button class="btn font-weight-bold"type="button">LFG</button></th>
-        <th><button class="btn font-weight-bold"type="button">LFG</button></th>
+        <th><button class="btn font-weight-bold"type="button">Sr.No.</button></th> 			
+        <th><button class="btn font-weight-bold"type="button">ETA DATE PQ NOC</button></th>
+        <th><button class="btn font-weight-bold"type="button">JOB NO FSSAI NOC</button></th>
+        <th><button class="btn font-weight-bold"type="button">IMPORTER KYC</button></th>
+        <th><button class="btn font-weight-bold"type="button">SHIPPER BL</button></th>
+        <th><button class="btn font-weight-bold"type="button">NO. OF PCKGS DELIVERY ORDER</button></th>
+        <th><button class="btn font-weight-bold"type="button">INVOICE NUMBER </button>	</th>
+        <th><button class="btn font-weight-bold"type="button">COMMODITY COO </button></th>
+        <th><button class="btn font-weight-bold"type="button">BILL OF ENTRY</button></th>
+        <th><button class="btn font-weight-bold"type="button">BE DATE EXM ORDER</button></th>
+        <th><button class="btn font-weight-bold"type="button">CONTAINER NO PACKING LIST </button></th>
+        <th><button class="btn font-weight-bold"type="button">PHYTO CERT</button></th>
+        <th><button class="btn font-weight-bold"type="button">STAMP
+          DUTY
+          </button></th>
+        <th><button class="btn font-weight-bold"type="button">YIELD
+          CERT
+          </button></th>
+        <th><button class="btn font-weight-bold"type="button">SHIPPING 
+          RECEIPT
+          </button></th>
+        <th><button class="btn font-weight-bold"type="button">CFS
+          RECEIPT
+          </button></th>
+        <th><button class="btn font-weight-bold"type="button">DUTY
+          RECEIPT
+          </button></th>
+        <th><button class="btn font-weight-bold"type="button">PQ
+          RECEIPT
+          </button></th>
+        <th><button class="btn font-weight-bold"type="button">FSSAI
+          RECEIPT
+          </button></th>
+        <th><button class="btn font-weight-bold"type="button">SURVEY
+          RECEIPT
+          </button></th>
+        <th><button class="btn font-weight-bold"type="button">OTHER
+          RECEIPTS
+          </button></th>
+        <th><button class="btn font-weight-bold"type="button">RBA BILL
+          PART A
+          </button></th>
+        <th><button class="btn font-weight-bold"type="button">RBA BILL
+          PART B
+          </button></th>    
       </tr>
 
       <tr v-for='i in da'>
-        <td><a href="">[[i[0] ]]</a></td>
-        <td><a href="">[[i[1] ]] </a></td>
-        <td><a href="">[[i[2] ]]</a></td>
-        <td><a href="">[[i[3] ]]</a></td>
-        <td><a href="">[[i[4] ]]</a></td>
-        <td><a href="">[[i[5] ]]</a></td>
-        <td><a href="">[[i[6] ]]</a></td>
-        <td><a href="">[[i[7] ]]</a></td>
-        <td><a href="">[[i[8] ]]</a></td>
-        <td><a href="">[[i[9] ]]</a></td>
-        <td><a href="">[[i[10] ]]</a></td>
-        <td><a href="">[[i[11] ]]</a></td>
-        <td><a href="">[[i[12] ]]</a></td>
-        <td><a href="">[[i[13] ]]</a></td>
-        <td><a href="">[[i[14] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[0] ]])">[[i[0] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[1] ]])">[[i[1] ]] </a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[2] ]])">[[i[2] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[3] ]])">[[i[3] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[4] ]])">[[i[4] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[5] ]])">[[i[5] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[6] ]])">[[i[6] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[7] ]])">[[i[7] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[8] ]])">[[i[8] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[9] ]])">[[i[9] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[10] ]])">[[i[10] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[11] ]])">[[i[11] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[12] ]])">[[i[12] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[13] ]])">[[i[13] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[14] ]])">[[i[14] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[15] ]])">[[i[15] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[16] ]])">[[i[16] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[17] ]])">[[i[17] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[18] ]])">[[i[18] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[19] ]])">[[i[19] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[20] ]])">[[i[20] ]]</a></td>        
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[21] ]])">[[i[21] ]]</a></td>
+        <td><a href="{{url_for('docview',rowno=[[i[0] ]],colval=[[i[22] ]])">[[i[22] ]]</a></td>
       </tr></center>
     </table>
   </div>
