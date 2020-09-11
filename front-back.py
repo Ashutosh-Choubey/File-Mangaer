@@ -56,6 +56,9 @@ def home():
             print(type(temp_data))
             cursor.close()
 
+        if 'logout' in request.form:
+            return redirect('/')
+
     return render_template('home.html', temp_data=temp_data, col_data=col_data)
 
 
@@ -85,7 +88,7 @@ def my_redirect():
 @app.route('/docview', methods=['GET', 'POST'])
 def docview():
     with open('/run/media/hrushitj/17446b6e-4537-4fd5-93af-783d2f8754b3/Capstone/File-Mangaer/FileUp/d1.pdf', 'rb') as static_file:
-        return send_file(static_file, attachment_filename='d1.pdf')
+        return send_file(static_file, attachment_filename='/FileUp/d1.pdf')
 
 
 if __name__ == "__main__":
