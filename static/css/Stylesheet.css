@@ -28,9 +28,10 @@ th:hover{
     background-color: #b9dbf7ea;
 }
 ::-webkit-scrollbar {
-height:8px;
+height:5px;
 border:1px solid #d5d5d5;
 margin:2px;
+width:2px;
 }
 ::-webkit-scrollbar-track {
     border-radius: 2px;
