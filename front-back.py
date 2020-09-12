@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect, send_file  
+from flask import Flask, render_template, url_for, request, redirect, send_file, session, flash  
 from flask_mysqldb import MySQL 
 import yaml 
 
@@ -10,23 +10,29 @@ app.config['MYSQLDB_USER'] = db['mysql_user']
 app.config['MYSQLDB_PASSWORD'] = db['mysql_password']
 app.config['MYSQL_DB'] = db['mysql_db']
 app.config['MYSQL_UPLOAD_FILES'] = db['mysql_fileStored']
+app.secret_key = 'jobhitulikhnachaheBongoliMC'
 mysql = MySQL(app)
 
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    check=0
     if request.method == 'POST':
+        session.pop('user_id', None)
         user_details = request.form
         name = user_details['uname']
         password_details = request.form['pass']
         cursor = mysql.connection.cursor()
         cursor.execute("SELECT pass from accounts where userid = %s;"%(name))
         passw = cursor.fetchall()
-        print(passw[0][0])
+        
         if password_details == passw[0][0]:
+            session['user_id'] = name
             print("SUCCESS")
-            return redirect('/home')
+            return redirect(url_for('home'))
+        else:
+            return redirect('/')
         cursor.close()
     return render_template('index.html')
 
@@ -34,65 +40,71 @@ def index():
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    cursor = mysql.connection.cursor()
-    cursor.execute('SELECT * from imports')
-    temp_data = cursor.fetchall()
-    cursor.execute('SHOW COLUMNS FROM imports')
-    col_data = cursor.fetchall()
-    cursor.close() 
-    
-    if request.method == 'POST':
-        if 'search' in request.form:
-            print('Entered loop')
-            try:
-                crit_res = request.form['Criteria']
-                search_res = request.form['search']
-                cursor = mysql.connection.cursor()
-                cursor.execute('SELECT * from imports WHERE %s like %s'%(crit_res, search_res))
-                print(crit_res)
-                print(search_res)
-                temp_data = cursor.fetchall()
-                print(temp_data)
-                print(type(temp_data))
-                cursor.close()
-            
-            except Exception:
-                flash('Not Found!')
-
-
-        if 'logout' in request.form:
-            return redirect('/')
-        
-        if 'Filter' in request.form:
-            status_pending = request.form['Pending']
-            status_completed = request.form['Completed']
-            status_delayed = request.form['Delayed']
+    try:
+        if session['user_id']:
             cursor = mysql.connection.cursor()
-            cursor.execute('SELECT * from imports WHERE %s like %s'%(crit_res, search_res))
-            print(crit_res)
-            print(search_res)
+            cursor.execute('SELECT * from imports')
             temp_data = cursor.fetchall()
-            print(temp_data)
-            print(type(temp_data))
-            cursor.close()
+            cursor.execute('SHOW COLUMNS FROM imports')
+            col_data = cursor.fetchall()
+            cursor.close() 
+            
+            if request.method == 'POST':
+                if 'search' in request.form:
+                    print('Entered loop')
+                    try:
+                        crit_res = request.form['Criteria']
+                        search_res = request.form['search']
+                        cursor = mysql.connection.cursor()
+                        cursor.execute('SELECT * from imports WHERE %s like %s'%(crit_res, search_res))
+                        print(crit_res)
+                        print(search_res)
+                        temp_data = cursor.fetchall()
+                        print(temp_data)
+                        print(type(temp_data))
+                        cursor.close()
+                    
+                    except Exception:
+                        flash('Not Found!')
 
-    return render_template('home.html', temp_data=temp_data, col_data=col_data)
+
+                if 'logout' in request.form:
+                    return redirect('/')
+                
+                if 'Filter' in request.form:
+                    status_pending = request.form['Pending']
+                    status_completed = request.form['Completed']
+                    status_delayed = request.form['Delayed']
+                    cursor = mysql.connection.cursor()
+                    cursor.execute('SELECT * from imports WHERE %s like %s'%(crit_res, search_res))
+                    print(crit_res)
+                    print(search_res)
+                    temp_data = cursor.fetchall()
+                    print(temp_data)
+                    print(type(temp_data))
+                    cursor.close()
+            return render_template('home.html', temp_data=temp_data, col_data=col_data)   
+    
+    except Exception:
+        return redirect('/')
 
 
 
 @app.route('/upload', methods=['GET','POST'])
 def upload():
-
-    if request.method == 'POST':
-        for i in range(1,2):
-            f = request.files['d{}'.format(i)] 
-            f.save('FileUp/'  + 'd{}.pdf'.format(i)) 
-        cursor = mysql.connection.cursor()
-        mysql.connection.commit()
-        cursor.close()  
-        return redirect('/home')
-    
-    return render_template('upload.html')
+    try:
+        if session['user_id']:
+            if request.method == 'POST':
+                for i in range(1,2):
+                    f = request.files['d{}'.format(i)] 
+                    f.save('FileUp/'  + 'd{}.pdf'.format(i)) 
+                cursor = mysql.connection.cursor()
+                mysql.connection.commit()
+                cursor.close()  
+                return redirect('/home')
+        return render_template('upload.html')
+    except Exception:
+            return redirect('/')
 
 @app.route('/my_redirect')
 def my_redirect():
