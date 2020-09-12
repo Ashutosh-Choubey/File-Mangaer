@@ -10,6 +10,7 @@
 </head>
 
 <body>
+  <div id ="app">
   
   <form method="POST" action="">
       <nav class=" navbar navbar-expand-lg fixed-top " style="background-color: #dbeaf6ea;">
@@ -32,25 +33,24 @@
       <button class="form-control  mr-5 btn btn-outline-light shadow-none "type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
       </form> 
     <div class="dropdown mr-0 ml-auto">
-      <form method='POST'>
-        <button class="btn btn-outline-light  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name='Filter'>
+      
+        <button class="btn btn-outline-light  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="Filter">
           <i class="fa fa-filter" aria-hidden="true"></i> Filter 
         </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item active" href="#" active value="Pending">Pending</a>
-          <a class="dropdown-item" href="#" value="Delayed">Delayed</a>
-          <a class="dropdown-item" href="#" value="Completed">Completed</a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" name="Status">
+          <a class="dropdown-item " href="{{ url_for('status', my_var = '0')}}"  value="0">Pending</a>
+          <a class="dropdown-item"  href="{{ url_for('status', my_var = '1')}}"  value="1">Delayed</a>
+          <a class="dropdown-item"  href="{{ url_for('status', my_var = '2')}}" value="2">Completed</a>
         </div>
-      </form>
+      
     </div>
     <a class="btn btn-outline-light d-inline-block mr-0 ml-2" href="{{ url_for('upload', _anchor='upload_files') }}"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
   </div>
   </div>
-  
-  <div id="app"  style="overflow-x: auto;" >
-
-    <!-- {{ message }} -->
+  <center><h3 style="position: relative;"  class='my-3'>[[message]]  </h3></center>
+  <div style="overflow-x: auto;" >
     <center><table class="rounded">
+      
       <tr>
         <th><button class="btn font-weight-bold"type="button">Sr.No.</button></th> 			
         <th><button class="btn font-weight-bold"type="button">ETA DATE PQ NOC</button></th>
@@ -78,31 +78,32 @@
       </tr>
  
       <tr v-for='i in da'> 
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[0] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[1] ]] </a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[2] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[3] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[4] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[5] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[6] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[7] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[8] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[9] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[10] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[11] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[12] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[13] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[14] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[15] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[16] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[17] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[18] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[19] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[20] ]]</a></td>        
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[21] ]]</a></td>
-        <td><a href="{{url_for('docview',rowno=1 ) }}">[[i[22] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[0] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[1] ]] </a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[2] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[3] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[4] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[5] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[6] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[7] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[8] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[9] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[10] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[11] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[12] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[13] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[14] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[15] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[16] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[17] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[18] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[19] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[20] ]]</a></td>        
+        <td><a href="{{ url_for('docview') }}">[[i[21] ]]</a></td>
+        <td><a href="{{ url_for('docview') }}">[[i[22] ]]</a></td>
       </tr></center>
     </table>
+  </div>
   </div>
   {%block scripts%}
   <script>
@@ -111,8 +112,7 @@
       el: '#app',
       delimiters: ['[[', ']]'],
       data: {
-        message: 'Hello Vue!',
-        col: {{col_data|tojson}},
+        message: {{current_view|tojson}},
         da : {{temp_data|tojson}} 
       }
     })
@@ -122,6 +122,6 @@
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
- 
+
 </body>
 </html>

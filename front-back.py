@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, request, redirect, send_file,
 from flask_mysqldb import MySQL 
 import yaml 
 
+
 app = Flask(__name__)
 
 db = yaml.load(open('db.yaml'))
@@ -67,23 +68,10 @@ def home():
                     except Exception:
                         flash('Not Found!')
 
-
                 if 'logout' in request.form:
                     return redirect('/')
                 
-                if 'Filter' in request.form:
-                    status_pending = request.form['Pending']
-                    status_completed = request.form['Completed']
-                    status_delayed = request.form['Delayed']
-                    cursor = mysql.connection.cursor()
-                    cursor.execute('SELECT * from imports WHERE %s like %s'%(crit_res, search_res))
-                    print(crit_res)
-                    print(search_res)
-                    temp_data = cursor.fetchall()
-                    print(temp_data)
-                    print(type(temp_data))
-                    cursor.close()
-            return render_template('home.html', temp_data=temp_data, col_data=col_data)   
+            return render_template('home.html', temp_data=temp_data, current_view = 'Pending')   
     
     except Exception:
         return redirect('/')
@@ -95,27 +83,63 @@ def upload():
     try:
         if session['user_id']:
             if request.method == 'POST':
-                for i in range(1,2):
-                    f = request.files['d{}'.format(i)] 
-                    f.save('FileUp/'  + 'd{}.pdf'.format(i)) 
-                cursor = mysql.connection.cursor()
-                mysql.connection.commit()
-                cursor.close()  
+                
+                for i in range(1,25):
+                    print('Entered 1 '+ str(i))
+                    print(f"d{i:02d}")
+                    f = request.files[f"d{i:02d}"]
+
+                    print('Entered 2 '+str(i))
+                    if f.filename == '':
+                        print('Entered 3 '+str(i))
+                        continue
+                    f.save(f"FileUp/d{i:02d}.pdf")
+                    print('Entered 4 '+str(i))
+                    cursor = mysql.connection.cursor()
+                    mysql.connection.commit()
+                    cursor.close()  
                 return redirect('/home')
-        return render_template('upload.html')
-    except Exception:
+        else:
             return redirect('/')
+        return render_template('upload.html')
+        
+        
+    except Exception as e:
+            print(e)
+            return redirect('/home')
 
 @app.route('/my_redirect')
 def my_redirect():
     return redirect(url_for('upload',_anchor='upload_files'))
 
 
-
 @app.route('/docview', methods=['GET', 'POST'])
 def docview():
     with open('/run/media/hrushitj/17446b6e-4537-4fd5-93af-783d2f8754b3/Capstone/File-Mangaer/FileUp/d1.pdf', 'rb') as static_file:
         return send_file(static_file, attachment_filename='/FileUp/d1.pdf')
+
+
+@app.route('/status', methods = ['GET', 'POST'])
+def status():
+    cursor = mysql.connection.cursor()
+    stat = request.args.get('my_var', None)
+    if stat == '0':
+        view = 'Pending'
+        cursor.execute('select * from pending'),
+        
+    elif stat == '1':
+        view = 'Delayed'
+        cursor.execute('select * from delay'),
+    elif stat == '2':
+        view = 'Completed'    
+        cursor.execute('select * from completed')
+
+    display = cursor.fetchall()
+    cursor.close()
+
+    return render_template('home.html', temp_data=display, current_view=view)
+    
+    
 
 
 if __name__ == "__main__":
