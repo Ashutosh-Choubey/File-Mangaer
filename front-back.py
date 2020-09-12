@@ -2,7 +2,6 @@ from flask import Flask, render_template, url_for, request, redirect, send_file
 from flask_mysqldb import MySQL 
 import yaml 
 
-
 app = Flask(__name__)
 
 db = yaml.load(open('db.yaml'))
@@ -45,16 +44,21 @@ def home():
     if request.method == 'POST':
         if 'search' in request.form:
             print('Entered loop')
-            crit_res = request.form['Criteria']
-            search_res = request.form['search']
-            cursor = mysql.connection.cursor()
-            cursor.execute('SELECT * from imports WHERE %s like %s'%(crit_res, search_res))
-            print(crit_res)
-            print(search_res)
-            temp_data = cursor.fetchall()
-            print(temp_data)
-            print(type(temp_data))
-            cursor.close()
+            try:
+                crit_res = request.form['Criteria']
+                search_res = request.form['search']
+                cursor = mysql.connection.cursor()
+                cursor.execute('SELECT * from imports WHERE %s like %s'%(crit_res, search_res))
+                print(crit_res)
+                print(search_res)
+                temp_data = cursor.fetchall()
+                print(temp_data)
+                print(type(temp_data))
+                cursor.close()
+            
+            except Exception:
+                flash('Not Found!')
+
 
         if 'logout' in request.form:
             return redirect('/')
