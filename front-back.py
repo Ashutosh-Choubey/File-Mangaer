@@ -1,6 +1,8 @@
 from flask import Flask, render_template, url_for, request, redirect, send_file, session, flash, send_from_directory  
 from flask_mysqldb import MySQL 
 import yaml 
+import os 
+
 
 
 app = Flask(__name__)
@@ -30,6 +32,7 @@ def index():
         
         if password_details == passw[0][0]:
             session['user_id'] = name
+            session['status'] = 0
             print("SUCCESS")
             return redirect(url_for('home'))
         else:
@@ -44,7 +47,7 @@ def home():
     try:
         if session['user_id']:
             cursor = mysql.connection.cursor()
-            cursor.execute('SELECT * from imports')
+            cursor.execute('SELECT * from pending')
             temp_data = cursor.fetchall()
             cursor.execute('SHOW COLUMNS FROM imports')
             col_data = cursor.fetchall()
@@ -57,7 +60,16 @@ def home():
                         crit_res = request.form['Criteria']
                         search_res = request.form['search']
                         cursor = mysql.connection.cursor()
-                        cursor.execute('SELECT * from imports WHERE %s like %s'%(crit_res, search_res))
+                    
+                        if session['status'] == 0:
+                            cursor.execute('SELECT * from pending WHERE %s like %s'%(crit_res, search_res))
+                            
+                        elif session['status'] == 1:
+                            cursor.execute('SELECT * from delay WHERE %s like %s'%(crit_res, search_res))
+
+                        elif session['status'] == 2:
+                            cursor.execute('SELECT * from completed WHERE %s like %s'%(crit_res, search_res))
+                    
                         print(crit_res)
                         print(search_res)
                         temp_data = cursor.fetchall()
@@ -111,6 +123,7 @@ def upload():
                 query_s = "INSERT INTO `imports` (eta_date`, `job`, `impname`, `shipper`, `pks`, `invoice_no`, `comm`, `be`, `be_date`, `container_no`, `phyto`, `st_duty`, `yield`, \
                                     `ship_rec`, `cfs`, `duty_rec`, `pq_rec`, `fssai_rec`, `surv_rec`, `o_rec`, `rba_bill_a`, `rba_bill_b`, `job_status`, `job_delayed`) VALUES (%s);" % var_string
                 cursor.execute(query_s, data)
+
                 cursor.close()  
                 return redirect('/home')
         else:
@@ -134,26 +147,28 @@ def docview():
 
 @app.route('/status', methods = ['GET', 'POST'])
 def status():
+
     cursor = mysql.connection.cursor()
+    cursor.execute('SHOW COLUMNS FROM imports')
+    col_data = cursor.fetchall()
     stat = request.args.get('my_var', None)
     if stat == '0':
         view = 'Pending'
         cursor.execute('select * from pending'),
         
     elif stat == '1':
+        session['status'] = 1
         view = 'Delayed'
         cursor.execute('select * from delay'),
     elif stat == '2':
+        session['status'] = 2
         view = 'Completed'    
         cursor.execute('select * from completed')
 
     display = cursor.fetchall()
     cursor.close()
 
-    return render_template('home.html', temp_data=display, current_view=view)
-    
-    
-
+    return render_template('home.html', temp_data=display, current_view=view,col_data=col_data) 
 
 if __name__ == "__main__":
     app.run(debug=True)
