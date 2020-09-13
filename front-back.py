@@ -79,7 +79,7 @@ def home():
 
 @app.route('/my_redirect')
 def my_redirect():
-    return redirect(url_for('upload',_anchor='upload_files'))
+    return redirect(url_for('upload'))
 
 
 @app.route('/upload', methods=['GET','POST'])
@@ -87,21 +87,31 @@ def upload():
     try:
         if session['user_id']:
             if request.method == 'POST':
-                
-                for i in range(1,25):
+                cursor = mysql.connection.cursor()
+                data = []
+                for i in range(1,23):
                     print('Entered 1 '+ str(i))
                     print(f"d{i:02d}")
                     f = request.files[f"d{i:02d}"]
-
+                    t_data= request.form(f"f{i}")
+                    data.append(t_data)
                     print('Entered 2 '+str(i))
                     if f.filename == '':
                         print('Entered 3 '+str(i))
                         continue
                     f.save(f"FileUp/d{i:02d}.pdf")
                     print('Entered 4 '+str(i))
-                    cursor = mysql.connection.cursor()
                     mysql.connection.commit()
-                    cursor.close()  
+
+                    for i in range(23,25):
+                        t_data =request.form(f"f{i}")
+                        data.append(t_data)
+
+                var_string = ', '.join('?' * len(data))  
+                query_s = "INSERT INTO `imports` (eta_date`, `job`, `impname`, `shipper`, `pks`, `invoice_no`, `comm`, `be`, `be_date`, `container_no`, `phyto`, `st_duty`, `yield`, \
+                                    `ship_rec`, `cfs`, `duty_rec`, `pq_rec`, `fssai_rec`, `surv_rec`, `o_rec`, `rba_bill_a`, `rba_bill_b`, `job_status`, `job_delayed`) VALUES (%s);" % var_string
+                cursor.execute(query_s, data)
+                cursor.close()  
                 return redirect('/home')
         else:
             return redirect('/')
@@ -115,10 +125,12 @@ def upload():
 
 
 
-@app.route('/docview/<int:_anchor>', methods=['GET', 'POST'])
-def docview(_anchor):
-    author = Author.query.get(_anchor) 
-    return send_from_directory('FileUp/', f'd{author}.pdf')
+@app.route('/docview/', methods=['GET', 'POST'])
+def docview():
+    if request.method == 'POST':
+        name = request.form['b1']
+        print(name)    
+        return send_from_directory('FileUp/', 'd01.pdf')
 
 @app.route('/status', methods = ['GET', 'POST'])
 def status():
