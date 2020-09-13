@@ -77,6 +77,10 @@ def home():
         return redirect('/')
 
 
+@app.route('/my_redirect')
+def my_redirect():
+    return redirect(url_for('upload',_anchor='upload_files'))
+
 
 @app.route('/upload', methods=['GET','POST'])
 def upload():
@@ -108,16 +112,14 @@ def upload():
             print(e)
             return redirect('/home')
 
-@app.route('/my_redirect')
-def my_redirect():
-    return redirect(url_for('upload',_anchor='upload_files'))
+
 
 
 @app.route('/docview', methods=['GET', 'POST'])
 def docview():
-    with open('/run/media/hrushitj/17446b6e-4537-4fd5-93af-783d2f8754b3/Capstone/File-Mangaer/FileUp/d1.pdf', 'rb') as static_file:
-        return send_file(static_file, attachment_filename='/FileUp/d1.pdf')
-
+    for i in range(1,23):
+        with open(f'/run/media/hrushitj/17446b6e-4537-4fd5-93af-783d2f8754b3/Capstone/File-Mangaer/FileUp/d{i:02d}.pdf', 'rb') as static_file:
+            return send_file(static_file, attachment_filename=f'/FileUp/d{i:02d}.pdf')
 
 @app.route('/status', methods = ['GET', 'POST'])
 def status():
