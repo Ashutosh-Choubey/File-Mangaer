@@ -71,7 +71,7 @@ def home():
                 if 'logout' in request.form:
                     return redirect('/')
                 
-            return render_template('home.html', temp_data=temp_data, current_view = 'Pending')   
+            return render_template('home.html', temp_data=temp_data, current_view = 'Pending', col_data=col_data)   
     
     except Exception:
         return redirect('/')
