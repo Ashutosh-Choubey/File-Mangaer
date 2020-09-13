@@ -46,6 +46,7 @@
     </div>
     <a class="btn btn-outline-light d-inline-block mr-0 ml-2" href="{{ url_for('upload', _anchor='upload_files') }}"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
   </div>
+  <h1>{{ temp_2 }}</h1>
   </div>
   <center><h3 style="position: relative;"  class='my-3'>[[message]]  </h3></center>
   <div style="overflow-x: auto;" >
@@ -76,9 +77,9 @@
         <th><button class="btn font-weight-bold"type="button">RBA BILL PART A</button></th>
         <th><button class="btn font-weight-bold"type="button">RBA BILL PART B</button></th>    
       </tr>
- 
+      
       <tr v-for='i in da'> 
-        <td><a href="{{ url_for('docview') }}">[[i[0] ]]</a></td>
+        <td><a href="{{ url_for('docview', _anchor='03') }}">[[i[0] ]]</a></td>
         <td><a href="{{ url_for('docview') }}">[[i[1] ]] </a></td>
         <td><a href="{{ url_for('docview') }}">[[i[2] ]]</a></td>
         <td><a href="{{ url_for('docview') }}">[[i[3] ]]</a></td>
