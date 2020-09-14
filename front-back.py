@@ -32,6 +32,7 @@ def index():
             session['user_id'] = name
             session['status'] = 0
             session['sort_data'] = None
+            
             print("SUCCESS")
             return redirect(url_for('home'))
         else:
@@ -115,29 +116,36 @@ def upload():
     try:
         if session['user_id']:
             if request.method == 'POST':
+                if 'logout' in request.form:
+                    return redirect('/')
+
                 cursor = mysql.connection.cursor()
                 data = []
                 for i in range(1,23):
                     print(f"d{i:02d}")
-                    f = request.files[f"d{i:02d}"]
-                    t_data= request.form(f"f{i}")
+                    if (i != 1) and (i != 9):
+                        print('Check 0109') 
+                        f = request.files[f"d{i:02d}"]
+                        if f.filename == '':
+                            continue
+                        f.save(f"FileUp/d{i:02d}.pdf")
+                    
+                    print('After save')
+                    t_data = request.form[f"f{i}"]
+                    print('t_data')
                     data.append(t_data)
-                    if f.filename == '':
-                        continue
-                    f.save(f"FileUp/d{i:02d}.pdf")
+                    print('Save')
                     mysql.connection.commit()
-
-                    for i in range(23,25):
-                        t_data =request.form(f"f{i}")
-                        data.append(t_data)
+            
 
                 var_string = ', '.join('?' * len(data))  
-                query_s = "INSERT INTO `imports` (eta_date`, `job`, `impname`, `shipper`, `pks`, `invoice_no`, `comm`, `be`, `be_date`, `container_no`, `phyto`, `st_duty`, `yield`, \
-                                    `ship_rec`, `cfs`, `duty_rec`, `pq_rec`, `fssai_rec`, `surv_rec`, `o_rec`, `rba_bill_a`, `rba_bill_b`, `job_status`, `job_delayed`) VALUES (%s);" % var_string
+                query_s = "INSERT INTO imports (eta_date, job, impname, shipper, pks, invoice_no, comm, be, be_date, container_no, phyto, st_duty, yield, ship_rec, cfs, duty_rec, pq_rec, fssai_rec, surv_rec, o_rec, rba_bill_a, rba_bill_b, job_status, job_delayed) VALUES (%s);"%(var_string)
                 cursor.execute(query_s, data)
 
                 cursor.close()  
                 return redirect('/home')
+
+                
         else:
             return redirect('/')
         return render_template('upload.html')
@@ -180,9 +188,6 @@ def status():
             return redirect('/home')
             cursor.close()
 
-            
-           # return render_template('home.html', temp_data=display, current_view=view,col_data=col_data) 
-    
     except Exception:
         return redirect('/')
 
@@ -190,28 +195,42 @@ def status():
 def sorting():
     try:
         if session['user_id']:
-            try:
+            if request.method == 'POST':
                 value = request.form['c1']
+                state = {value:0}
                 cursor = mysql.connection.cursor()
 
                 if stat == '0':
-                    cursor.execute('SELECT * from pending order by %s'%(value))
-                
+                    if state[value] == 0:
+                        cursor.execute('SELECT * from pending order by %s'%(value))
+                    else:
+                        #Descending
+                        state[value] = 1
+                        cursor.execute('SELECT * from pending order by %s'%(value))
+
                 if stat == '1':
-                    cursor.execute('SELECT * from delay order by %s'%(value))
-                
+                    if state[value] == 0:
+                        cursor.execute('SELECT * from delay order by %s'%(value))
+                    else:
+                        state[value]=1
+                        cursor.execute('SELECT * from delay order by %s'%(value))
+
                 if stat == '2':
-                    cursor.execute('SELECT * from completed order by %s'%(value))
+
+                    if state[value] == 0:
+                        cursor.execute('SELECT * from completed order by %s'%(value))
+
+                    else:
+                        state[value] = 1
+                        cursor.execute('SELECT * from completed order by %s'%(value))
 
                 session['sort_data'] = cursor.fetchall()
-                session['sort_data'] = sorted(session['sort_data'])
-                
+
+                print(session['sort_data'])
                 return redirect('/home')
                 cursor.close()
-            
-            except Exception as e:
-                print(e)
-                
+        
+
     except Exception:
         return redirect('/')
 
