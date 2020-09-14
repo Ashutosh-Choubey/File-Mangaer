@@ -31,6 +31,7 @@ def index():
         if password_details == passw[0][0]:
             session['user_id'] = name
             session['status'] = 0
+            session['sort_data'] = None
             print("SUCCESS")
             return redirect(url_for('home'))
         else:
@@ -93,7 +94,7 @@ def home():
                         flash('Not Found!')
                 
                 if 'sort' in request.form:
-                    sorted(temp_data)    
+                    temp_data = session['sort_data']    
                     
                 if 'logout' in request.form:
                     return redirect('/')
@@ -190,14 +191,23 @@ def sorting():
     try:
         if session['user_id']:
             try:
+                value = request.form['c1']
                 cursor = mysql.connection.cursor()
-                cursor.execute('SELECT * from pending')
-                temp_data = cursor.fetchall()
-                cursor.execute('SHOW COLUMNS FROM imports')
-                col_data = cursor.fetchall()
 
-                temp_data=sorted(temp_data)
-                return render_template('home.html', temp_data=temp_data, current_view='Pending',col_data=col_data)
+                if stat == '0':
+                    cursor.execute('SELECT * from pending order by %s'%(value))
+                
+                if stat == '1':
+                    cursor.execute('SELECT * from delay order by %s'%(value))
+                
+                if stat == '2':
+                    cursor.execute('SELECT * from completed order by %s'%(value))
+
+                session['sort_data'] = cursor.fetchall()
+                session['sort_data'] = sorted(session['sort_data'])
+                
+                return redirect('/home')
+                cursor.close()
             
             except Exception as e:
                 print(e)
