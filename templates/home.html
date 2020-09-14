@@ -25,9 +25,28 @@
     <form class ="form" method ="POST" action="">
       <select class="form-control mr-2" name='Criteria'>
         <option selected>Select Criteria</option>
-        <option value="impname">impname</option>
-        <option value="job">job</option>
-        <option value="shipper">shipper</option>
+        <option value="col[1]">ETA DATE PQ NOC</option>
+        <option value="col[2]">JOB NO FSSAI NOC</option>
+        <option value="col[3]">IMPORTER KYC</option>
+        <option value="col[4]">BL</option>
+        <option value="col[5]">NO. OF PCKGS DELIVERY ORDER</option>
+        <option value="col[6]"INVOICE NUMBER></option>
+        <option value="col[7]">COMMODITY COO </option>
+        <option value="col[8]">BILL OF ENTRY</option>
+        <option value="col[9]">BE DATE EXM ORDER</option>
+        <option value="col[10]">CONTAINER NO PACKING LIST</option>
+        <option value="col[11]">PHYTO CERT</option>
+        <option value="col[12]">STAMP DUTY</option>
+        <option value="col[13]">YIELD CERT</option>
+        <option value="col[14]">SHIPPING RECEIPT</option>
+        <option value="col[15]">CFS RECEIPT</option>
+        <option value="col[16]">DUTY RECEIPT</option>
+        <option value="col[17]">PQ RECEIPT</option>
+        <option value="col[18]">FSSAI RECEIPT</option>
+        <option value="col[19]">SURVEY RECEIPT</option>
+        <option value="col[20]">OTHER RECEIPTS</option>
+        <option value="col[21]">RBA BILL PART A</option>
+        <option value="col[22]">RBA BILL PART B</option>
       </select>
       <input class="form-control mr-2" type="text" placeholder="Search" name="search">
       <button class="form-control  mr-5 btn btn-outline-light shadow-none "class="btn" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -57,7 +76,7 @@
         <th><button class="btn font-weight-bold"type="button">ETA DATE PQ NOC</button></th>
         <th><button class="btn font-weight-bold"type="button">JOB NO FSSAI NOC</button></th>
         <th><button class="btn font-weight-bold"type="button">IMPORTER KYC</button></th>
-        <th><button class="btn font-weight-bold"type="button">SHIPPER BL</button></th>
+        <th><button class="btn font-weight-bold"type="button"> BL</button></th>
         <th><button class="btn font-weight-bold"type="button">NO. OF PCKGS DELIVERY ORDER</button></th>
         <th><button class="btn font-weight-bold"type="button">INVOICE NUMBER </button>	</th>
         <th><button class="btn font-weight-bold"type="button">COMMODITY COO </button></th>
@@ -79,7 +98,7 @@
       </tr>
       
       <tr v-for='i in da' > 
-        <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value= "[[ i[0] ]] +'^'+ [[ col[0] ]]" >[[ i[0]  ]]</button> </form></td>
+        <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value= "[[ i[0] ]] +'^'+ [[  ]]" >[[ i[0]  ]]</button> </form></td>
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[1] ]]" >[[  i[1] ]] </button> </form></td>
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[2] ]]" >[[  i[2] ]] </button> </form></td>
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[3] ]]" >[[  i[3] ]] </button> </form></td>
