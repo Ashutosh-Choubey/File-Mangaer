@@ -4,7 +4,6 @@ import yaml
 import os 
 
 
-
 app = Flask(__name__)
 
 db = yaml.load(open('db.yaml'))
@@ -15,7 +14,6 @@ app.config['MYSQL_DB'] = db['mysql_db']
 app.config['MYSQL_UPLOAD_FILES'] = db['mysql_fileStored']
 app.secret_key = 'jobhitulikhnachaheBongoliMC'
 mysql = MySQL(app)
-
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -46,44 +44,61 @@ def index():
 def home():
     try:
         if session['user_id']:
+            
             cursor = mysql.connection.cursor()
-            cursor.execute('SELECT * from pending')
+
+            if session['status'] == 0:
+                view= 'Pending'
+                cursor.execute('SELECT * from pending')
+                
+            elif session['status'] == 1:
+                view= 'Delayed'
+                cursor.execute('SELECT * from delay')
+
+            elif session['status'] == 2:
+                view= 'Completed'
+                cursor.execute('SELECT * from completed')
+            
             temp_data = cursor.fetchall()
             cursor.execute('SHOW COLUMNS FROM imports')
             col_data = cursor.fetchall()
             cursor.close() 
             
             if request.method == 'POST':
-                if 'search' in request.form:
+                
+                if 'search_b' in request.form:
                     print('Entered loop')
                     try:
                         crit_res = request.form['Criteria']
+                        crit_res = crit_res.split(',')
+                        print(crit_res[0])
                         search_res = request.form['search']
+                        print(search_res)
                         cursor = mysql.connection.cursor()
-                    
+
                         if session['status'] == 0:
-                            cursor.execute('SELECT * from pending WHERE %s like %s'%(crit_res, search_res))
+                            cursor.execute('SELECT * from pending WHERE %s like \'%s\''%(crit_res[0], search_res))
                             
                         elif session['status'] == 1:
-                            cursor.execute('SELECT * from delay WHERE %s like %s'%(crit_res, search_res))
+                            cursor.execute('SELECT * from delay WHERE %s like \'%s\''%(crit_res[0], search_res))
 
                         elif session['status'] == 2:
-                            cursor.execute('SELECT * from completed WHERE %s like %s'%(crit_res, search_res))
-                    
-                        print(crit_res)
-                        print(search_res)
+                            cursor.execute('SELECT * from completed WHERE %s like \'%s\''%(crit_res[0], search_res))
+                        
                         temp_data = cursor.fetchall()
                         print(temp_data)
-                        print(type(temp_data))
                         cursor.close()
                     
                     except Exception:
                         flash('Not Found!')
-
+                
+                if 'sort' in request.form:
+                    sorted(temp_data)    
+                    
                 if 'logout' in request.form:
                     return redirect('/')
                 
-            return render_template('home.html', temp_data=temp_data, current_view = 'Pending', col_data=col_data)   
+        return render_template('home.html', temp_data=temp_data, current_view = view, col_data=col_data)   
     
     except Exception:
         return redirect('/')
@@ -102,17 +117,13 @@ def upload():
                 cursor = mysql.connection.cursor()
                 data = []
                 for i in range(1,23):
-                    print('Entered 1 '+ str(i))
                     print(f"d{i:02d}")
                     f = request.files[f"d{i:02d}"]
                     t_data= request.form(f"f{i}")
                     data.append(t_data)
-                    print('Entered 2 '+str(i))
                     if f.filename == '':
-                        print('Entered 3 '+str(i))
                         continue
                     f.save(f"FileUp/d{i:02d}.pdf")
-                    print('Entered 4 '+str(i))
                     mysql.connection.commit()
 
                     for i in range(23,25):
@@ -136,39 +147,64 @@ def upload():
             return redirect('/home')
 
 
-
-
 @app.route('/docview/', methods=['GET', 'POST'])
 def docview():
-    if request.method == 'POST':
-        name = request.form['b1']
-        print(name)    
-        return send_from_directory('FileUp/', 'd01.pdf')
+    try:
+        if session['user_id']:
+            if request.method == 'POST':
+                name = request.form['b1']
+                print(name)    
+                return send_from_directory('FileUp/', 'd01.pdf')
+    
+    except Exception:
+        return redirect('/')
 
 @app.route('/status', methods = ['GET', 'POST'])
 def status():
+    try:
+        if session['user_id']:
+            cursor = mysql.connection.cursor()
+            cursor.execute('SHOW COLUMNS FROM imports')
+            col_data = cursor.fetchall()
+            stat = request.args.get('my_var', None)
+            if stat == '0':
+                session['status'] = 0
+            
+            elif stat == '1':
+                session['status'] = 1
+                
+            elif stat == '2':
+                session['status'] = 2
+                    
+            return redirect('/home')
+            cursor.close()
 
-    cursor = mysql.connection.cursor()
-    cursor.execute('SHOW COLUMNS FROM imports')
-    col_data = cursor.fetchall()
-    stat = request.args.get('my_var', None)
-    if stat == '0':
-        view = 'Pending'
-        cursor.execute('select * from pending'),
-        
-    elif stat == '1':
-        session['status'] = 1
-        view = 'Delayed'
-        cursor.execute('select * from delay'),
-    elif stat == '2':
-        session['status'] = 2
-        view = 'Completed'    
-        cursor.execute('select * from completed')
+            
+           # return render_template('home.html', temp_data=display, current_view=view,col_data=col_data) 
+    
+    except Exception:
+        return redirect('/')
 
-    display = cursor.fetchall()
-    cursor.close()
+@app.route('/sorted', methods=['GET', 'POST'])
+def sorting():
+    try:
+        if session['user_id']:
+            try:
+                cursor = mysql.connection.cursor()
+                cursor.execute('SELECT * from pending')
+                temp_data = cursor.fetchall()
+                cursor.execute('SHOW COLUMNS FROM imports')
+                col_data = cursor.fetchall()
 
-    return render_template('home.html', temp_data=display, current_view=view,col_data=col_data) 
+                temp_data=sorted(temp_data)
+                return render_template('home.html', temp_data=temp_data, current_view='Pending',col_data=col_data)
+            
+            except Exception as e:
+                print(e)
+                
+    except Exception:
+        return redirect('/')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
