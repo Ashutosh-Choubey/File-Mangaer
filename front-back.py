@@ -18,7 +18,7 @@ mysql = MySQL(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    check=0
+    
     if request.method == 'POST':
         session.pop('user_id', None)
         user_details = request.form
