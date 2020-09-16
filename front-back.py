@@ -102,7 +102,8 @@ def home():
                 
         return render_template('home.html', temp_data=temp_data, current_view = view, col_data=col_data)   
     
-    except Exception:
+    except Exception as e:
+        print(e)
         return redirect('/')
 
 
@@ -162,10 +163,11 @@ def docview():
         if session['user_id']:
             if request.method == 'POST':
                 name = request.form['b1']
-                print(name)    
-                return send_from_directory('FileUp/', 'd01.pdf')
+                print(name.split('^'))    
+                return send_from_directory('FileUp/', "d0"+name[0]+".pdf")
     
-    except Exception:
+    except Exception as e:
+        print(e)
         return redirect('/')
 
 @app.route('/status', methods = ['GET', 'POST'])
@@ -185,7 +187,8 @@ def status():
             return redirect('/home')
         
 
-    except Exception:
+    except Exception as e:
+        print(e)
         return redirect('/')
 
 @app.route('/sorted', methods=['GET', 'POST'])
@@ -228,7 +231,8 @@ def sorting():
                 cursor.close()
         
 
-    except Exception:
+    except Exception as e:
+        print(e)
         return redirect('/')
 
 
