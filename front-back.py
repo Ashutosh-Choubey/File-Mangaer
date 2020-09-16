@@ -165,11 +165,9 @@ def docview():
     try:
         if session['user_id']:
             if request.method == 'POST':
-                name = request.form['b1']
-                name = name.split('^')
-                name = name[1].split(',')
-                name = name[0]
-                print(name)                    
+                name = (request.form['b1']).split('^')[1].split(',')[0]
+                print(name)
+                                    
                 return send_from_directory('FileUp/', "d0"+name+".pdf")
     
     except Exception as e:
