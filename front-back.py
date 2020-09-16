@@ -172,9 +172,6 @@ def docview():
 def status():
     try:
         if session['user_id']:
-            cursor = mysql.connection.cursor()
-            cursor.execute('SHOW COLUMNS FROM imports')
-            col_data = cursor.fetchall()
             stat = request.args.get('my_var', None)
             if stat == '0':
                 session['status'] = 0
@@ -186,7 +183,7 @@ def status():
                 session['status'] = 2
                     
             return redirect('/home')
-            cursor.close()
+        
 
     except Exception:
         return redirect('/')
@@ -199,7 +196,7 @@ def sorting():
                 value = request.form['c1']
                 state = {value:0}
                 cursor = mysql.connection.cursor()
-
+                stat = request.args.get('my_var', None)
                 if stat == '0':
                     if state[value] == 0:
                         cursor.execute('SELECT * from pending order by %s'%(value))
