@@ -1,8 +1,8 @@
 from flask import Flask, render_template, url_for, request, redirect, send_file, session, flash, send_from_directory  
 from flask_mysqldb import MySQL 
 import yaml 
-import os 
-
+import os
+import pprint 
 
 app = Flask(__name__)
 
@@ -14,7 +14,8 @@ app.config['MYSQL_DB'] = db['mysql_db']
 app.config['MYSQL_UPLOAD_FILES'] = db['mysql_fileStored']
 app.secret_key = 'jobhitulikhnachaheBongoliMC'
 mysql = MySQL(app)
-
+val = None
+state = {'value':val, 'stat':0}
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -32,6 +33,7 @@ def index():
             session['user_id'] = name
             session['status'] = 0
             session['sort_data'] = None
+            session['is_sort'] = 0
             
             print("SUCCESS")
             return redirect(url_for('home'))
@@ -39,7 +41,6 @@ def index():
             return redirect('/')
         cursor.close()
     return render_template('index.html')
-
 
 
 @app.route('/home', methods=['GET', 'POST'])
@@ -90,18 +91,20 @@ def home():
                         temp_data = cursor.fetchall()
                         print(temp_data)
                         cursor.close()
-                    
+
                     except Exception:
                         flash('Not Found!')
+
                 
-                if 'sort' in request.form:
-                    temp_data = session['sort_data']    
-                    
                 if 'logout' in request.form:
                     return redirect('/')
-                
+           
+            if session['is_sort'] == 1:
+                    session['is_sort'] = 0
+                    temp_data = session['sort_data']
+            
         return render_template('home.html', temp_data=temp_data, current_view = view, col_data=col_data)   
-    
+     
     except Exception as e:
         print(e)
         return redirect('/')
@@ -163,8 +166,11 @@ def docview():
         if session['user_id']:
             if request.method == 'POST':
                 name = request.form['b1']
-                print(name.split('^'))    
-                return send_from_directory('FileUp/', "d0"+name[0]+".pdf")
+                name = name.split('^')
+                name = name[1].split(',')
+                name = name[0]
+                print(name)                    
+                return send_from_directory('FileUp/', "d0"+name+".pdf")
     
     except Exception as e:
         print(e)
@@ -192,45 +198,51 @@ def status():
         return redirect('/')
 
 @app.route('/sorted', methods=['GET', 'POST'])
-def sorting():
+def sorted():
     try:
         if session['user_id']:
+            
             if request.method == 'POST':
+                global val
                 value = request.form['c1']
-                state = {value:0}
+                value = value.split(',')
+                val = value[0]
+                state['value'] = val                                     
                 cursor = mysql.connection.cursor()
-                stat = request.args.get('my_var', None)
-                if stat == '0':
-                    if state[value] == 0:
-                        cursor.execute('SELECT * from pending order by %s'%(value))
+                
+                if session['status'] == 0:
+                    if state['stat'] == 0:
+                        state['stat'] = 1
+                        cursor.execute("SELECT * from pending order by %s"%(val))
+                    elif state['stat'] == 1:
+                        state['stat'] = 0
+                        cursor.execute("SELECT * from pending order by %s DESC"%(val))
+
+                if session['status'] == 1:
+                    if state['stat'] == 0:
+                        state['stat'] = 1
+                        cursor.execute("SELECT * from delay order by %s"%(val))
                     else:
-                        #Descending
-                        state[value] = 1
-                        cursor.execute('SELECT * from pending order by %s'%(value))
+                        state['stat'] = 0
+                        cursor.execute("SELECT * from delay order by %s DESC"%(val))
 
-                if stat == '1':
-                    if state[value] == 0:
-                        cursor.execute('SELECT * from delay order by %s'%(value))
-                    else:
-                        state[value]=1
-                        cursor.execute('SELECT * from delay order by %s'%(value))
+                if session['status'] == 2:
 
-                if stat == '2':
-
-                    if state[value] == 0:
-                        cursor.execute('SELECT * from completed order by %s'%(value))
+                    if state['stat'] == 0:
+                        state['stat'] = 1
+                        cursor.execute("SELECT * from completed order by %s"%(val))
 
                     else:
-                        state[value] = 1
-                        cursor.execute('SELECT * from completed order by %s'%(value))
+                        state['stat'] = 0
+                        cursor.execute("SELECT * from completed order by %s DESC"%(val))
 
-                session['sort_data'] = cursor.fetchall()
-
-                print(session['sort_data'])
-                return redirect('/home')
+                sort_data = cursor.fetchall()
+                session['sort_data'] = sort_data 
+                session['is_sort'] = 1
                 cursor.close()
+                return redirect('/home')
+                
         
-
     except Exception as e:
         print(e)
         return redirect('/')
