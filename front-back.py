@@ -125,27 +125,25 @@ def upload():
 
                 cursor = mysql.connection.cursor()
                 data = []
-                for i in range(1,23):
-                    print(f"d{i:02d}")
-                    if (i != 1) and (i != 9):
-                        print('Check 0109') 
+
+                for i in range(1,23): 
+                    t_data = ''
+                    if (i != 1) and (i != 9):     
                         f = request.files[f"d{i:02d}"]
                         if f.filename == '':
                             continue
                         f.save(f"FileUp/d{i:02d}.pdf")
-                    
+
                     print('After save')
-                    t_data = request.form[f"f{i}"]
-                    print('t_data')
-                    data.append(t_data)
-                    print('Save')
-                    mysql.connection.commit()
-            
-
-                var_string = ', '.join('?' * len(data))  
-                query_s = "INSERT INTO imports (eta_date, job, impname, shipper, pks, invoice_no, comm, be, be_date, container_no, phyto, st_duty, yield, ship_rec, cfs, duty_rec, pq_rec, fssai_rec, surv_rec, o_rec, rba_bill_a, rba_bill_b, job_status, job_delayed) VALUES (%s);"%(var_string)
-                cursor.execute(query_s, data)
-
+                    t_data = request.form['f{}'.format(i)]    
+                    data.insert(i, t_data)     
+                
+                print(data)
+                var_string = ', '.join('?' * len(data))
+                #print(var_string)  
+                #query_s = "INSERT INTO imports (eta_date, job, impname, shipper, pks, invoice_no, comm, be, be_date, container_no, phyto, st_duty, yield, ship_rec, cfs, duty_rec, pq_rec, fssai_rec, surv_rec, o_rec, rba_bill_a, rba_bill_b) VALUES (%s);"%(var_string)
+                #cursor.execute(query_s, data)
+                #mysql.connection.commit()
                 cursor.close()  
                 return redirect('/home')
 
