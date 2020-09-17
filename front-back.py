@@ -137,6 +137,10 @@ def upload():
 
                     print('After save')
                     t_data = request.form['f{}'.format(i)]
+                    
+                    if (i==1 or i==9) and (t_data == ''):
+                        t_data = None
+                        
                     data_d[i-1]=t_data
                 
                 for key in data_d:
