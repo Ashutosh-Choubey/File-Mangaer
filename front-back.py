@@ -124,8 +124,8 @@ def home():
             if session['is_sort'] == 1:
                     session['is_sort'] = 0
                     temp_data = session['sort_data']
-            
-        return render_template('home.html', temp_data=temp_data, current_view = view, col_data=col_data)   
+            status_check = 'unchecked'
+        return render_template('home.html', temp_data=temp_data, current_view = view, col_data=col_data, status_check=status_check)   
      
     except Exception as e:
         print(e)
