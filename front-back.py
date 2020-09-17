@@ -124,26 +124,34 @@ def upload():
                     return redirect('/')
 
                 cursor = mysql.connection.cursor()
+                data_d = {}
                 data = []
 
-                for i in range(1,23): 
-                    t_data = ''
-                    if (i != 1) and (i != 9):     
+                for i in range(1,23):
+                    data.append(None)
+                    if (i != 1) and (i != 9):
                         f = request.files[f"d{i:02d}"]
                         if f.filename == '':
                             continue
                         f.save(f"FileUp/d{i:02d}.pdf")
 
                     print('After save')
-                    t_data = request.form['f{}'.format(i)]    
-                    data.insert(i, t_data)     
+                    t_data = request.form['f{}'.format(i)]
+                    data_d[i-1]=t_data
+                
+                for key in data_d:
+                    data[key] = data_d[key]
                 
                 print(data)
-                var_string = ', '.join('?' * len(data))
-                #print(var_string)  
-                #query_s = "INSERT INTO imports (eta_date, job, impname, shipper, pks, invoice_no, comm, be, be_date, container_no, phyto, st_duty, yield, ship_rec, cfs, duty_rec, pq_rec, fssai_rec, surv_rec, o_rec, rba_bill_a, rba_bill_b) VALUES (%s);"%(var_string)
-                #cursor.execute(query_s, data)
-                #mysql.connection.commit()
+                print(data_d)
+                print(len(data))
+
+                var_string = '%s,'*len(data)
+                print(var_string)
+                
+                query_s = "INSERT INTO imports (eta_date, job, impname, shipper, pks, invoice_no, comm, be, be_date, container_no, phyto, st_duty, yield, ship_rec, cfs, duty_rec, pq_rec, fssai_rec, surv_rec, o_rec, rba_bill_a, rba_bill_b) VALUES (%s);"%(var_string[:-1])
+                cursor.execute(query_s, data)
+                mysql.connection.commit()
                 cursor.close()  
                 return redirect('/home')
 
