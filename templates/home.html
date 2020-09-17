@@ -97,7 +97,7 @@
         <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[22] ]]">RBA BILL PART B</button></form></th>    
       </tr>
       
-      <tr v-for='i in da' > 
+    <tr v-for='i in da' > 
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[1] ]]" >[[  i[1] ]] </button> </form></td>
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[2] ]]" >[[  i[2] ]] </button> </form></td>
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[3] ]]" >[[  i[3] ]] </button> </form></td>
@@ -120,6 +120,7 @@
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[20] ]]" >[[ i[20] ]] </button> </form></td>        
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[21] ]]" >[[ i[21] ]] </button> </form></td>
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[22] ]]" >[[ i[22] ]] </button> </form></td>
+      
       </tr></center>
     </table>
   </div>

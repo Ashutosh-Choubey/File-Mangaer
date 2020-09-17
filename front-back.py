@@ -16,6 +16,28 @@ app.secret_key = 'jobhitulikhnachaheBongoliMC'
 mysql = MySQL(app)
 val = None
 state = {'value':val, 'stat':0}
+file_fetch = {'eta_date':'d01.pdf',
+               'job':'d02.pdf',
+               'impname':'d03.pdf',
+               'shipper':'d04.pdf',
+               'pks':'d05.pdf',
+               'invoice_no':'d06.pdf',
+               'comm':'d07.pdf',
+               'be':'d08.pdf',
+               'be_date':'d09.pdf',
+               'container_no':'d10.pdf',
+               'phyto':'d11.pdf',
+               'st_duty':'d12.pdf',
+               'yield':'d13.pdf',
+               'ship_rec':'d14.pdf',
+               'cfs':'d15.pdf',
+               'duty_rec':'d16.pdf',
+               'pq_rec':'d17.pdf',
+               'fssai_rec':'d18.pdf',
+               'surv_rec':'d19.pdf',
+               'o_rec':'d20.pdf',
+               'rba_bill_a':'d21.pdf',
+               'rba_bill_b':'d22.pdf'}
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -126,14 +148,21 @@ def upload():
                 cursor = mysql.connection.cursor()
                 data_d = {}
                 data = []
+                cursor.execute('SELECT MAX(srno) from imports;')
 
+                srno = cursor.fetchone()
+                if srno[0] == 'NULL':
+                    srno[0] = 0
+                new_srno = srno[0]+1
+                os.mkdir('FileUp/'+str(new_srno))
                 for i in range(1,23):
                     data.append(None)
                     if (i != 1) and (i != 9):
                         f = request.files[f"d{i:02d}"]
                         if f.filename == '':
                             continue
-                        f.save(f"FileUp/d{i:02d}.pdf")
+                        
+                        f.save(f"FileUp/{new_srno}/d{i:02d}.pdf")
 
                     print('After save')
                     t_data = request.form['f{}'.format(i)]
@@ -172,13 +201,17 @@ def upload():
 
 @app.route('/docview/', methods=['GET', 'POST'])
 def docview():
+    global file_fetch
     try:
         if session['user_id']:
             if request.method == 'POST':
-                name = (request.form['b1']).split('^')[1].split(',')[0]
-                print(name)
-                                    
-                return send_from_directory('FileUp/', "d0"+name+".pdf")
+                db_srno = (request.form['b1']).split('^')[0]
+                col = (request.form['b1']).split('^')[1].split(',')[0]
+                col_name = file_fetch.get(col)
+                print(db_srno)
+                print(col_name)
+                
+                return send_from_directory(f'FileUp/{db_srno}',col_name)
     
     except Exception as e:
         print(e)
