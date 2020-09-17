@@ -70,6 +70,7 @@
   <center><h3 style="position: relative;"  class='my-3'>[[message]]  </h3></center>
   <div style="overflow-x: auto;" >
     <center><table class="rounded">
+    
       
       <tr>
         {% if current_view!='Delayed' %}
@@ -100,6 +101,7 @@
       </tr>
       
     <tr v-for='i in da' >
+      <!-- <b v-if='date >[[i[1] ]]'> -->
         {% if current_view!='Delayed' %}
           <td><form method="POST" action="{{ url_for('docview') }}" ><input type="checkbox" name = "[[ i[0] ]]"  {{status_check}}><input type="submit"></form></td> 
         {% endif %}
@@ -125,7 +127,7 @@
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[20] ]]" >[[ i[20] ]] </button> </form></td>        
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[21] ]]" >[[ i[21] ]] </button> </form></td>
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[22] ]]" >[[ i[22] ]] </button> </form></td>
-      
+      <!-- </b v-if='date >[[i[1] ]]'>  -->
       </tr></center>
     </table>
   </div>
@@ -139,7 +141,8 @@
       data: {
         message: {{current_view|tojson}},
         da: {{temp_data|tojson}},
-        col: {{col_data|tojson}}
+        col: {{col_data|tojson}},
+        date: {{date|tojson}}
       }
     })
            

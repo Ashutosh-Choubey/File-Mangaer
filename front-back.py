@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 import yaml 
 import os
 import pprint 
+from datetime import date
 
 app = Flask(__name__)
 
@@ -14,6 +15,7 @@ app.config['MYSQL_DB'] = db['mysql_db']
 app.config['MYSQL_UPLOAD_FILES'] = db['mysql_fileStored']
 app.secret_key = 'jobhitulikhnachaheBongoliMC'
 mysql = MySQL(app)
+
 val = None
 state = {'value':val, 'stat':0}
 file_fetch = {'eta_date':'d01.pdf',
@@ -125,7 +127,8 @@ def home():
                     session['is_sort'] = 0
                     temp_data = session['sort_data']
             status_check = 'unchecked'
-        return render_template('home.html', temp_data=temp_data, current_view = view, col_data=col_data, status_check=status_check)   
+            today = date.today().strftime('%d/%m/%Y')
+        return render_template('home.html', temp_data=temp_data, current_view = view, col_data=col_data, status_check=status_check, date=today)   
      
     except Exception as e:
         print(e)
