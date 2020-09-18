@@ -103,7 +103,7 @@
     <tr v-for='i in da' >
       <!-- <b v-if='date >[[i[1] ]]'> -->
         {% if current_view!='Delayed' %}
-          <td><form method="POST" action="{{ url_for('docview') }}" ><input type="checkbox" name = "[[ i[0] ]]"  {{status_check}}><input type="submit"></form></td> 
+          <td><form method="POST" action="{{ url_for('docview') }}" ><input type="checkbox" name = "[[ i[0] ]]"  {{status_check}}> <button type="submit" class="btn btn-sm btn-outline-secondary py-0 pl-1 pr-1" data-toggle="tooltip" data-placement="bottom" title="Update"><i class="fas fa-sync"></i></button></form></td> 
         {% endif %}
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[1] ]]" >[[  i[1] ]] </button> </form></td>
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[2] ]]" >[[  i[2] ]] </button> </form></td>
