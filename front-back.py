@@ -128,6 +128,7 @@ def home():
                     temp_data = session['sort_data']
             status_check = 'unchecked'
             today = date.today().strftime('%d/%m/%Y')
+
         return render_template('home.html', temp_data=temp_data, current_view = view, col_data=col_data, status_check=status_check, date=today)   
      
     except Exception as e:
@@ -152,8 +153,8 @@ def upload():
                 data_d = {}
                 data = []
                 cursor.execute('SELECT MAX(srno) from imports;')
-
                 srno = cursor.fetchone()
+                
                 if srno[0] == 'NULL':
                     srno[0] = 0
                 new_srno = srno[0]+1
@@ -164,7 +165,7 @@ def upload():
                         f = request.files[f"d{i:02d}"]
                         if f.filename == '':
                             continue
-                        
+                    
                         f.save(f"FileUp/{new_srno}/d{i:02d}.pdf")
 
                     print('After save')
@@ -178,17 +179,15 @@ def upload():
                 for key in data_d:
                     data[key] = data_d[key]
                 
-                print(data)
-                print(data_d)
-                print(len(data))
-
                 var_string = '%s,'*len(data)
-                print(var_string)
                 
                 query_s = "INSERT INTO imports (eta_date, job, impname, shipper, pks, invoice_no, comm, be, be_date, container_no, phyto, st_duty, yield, ship_rec, cfs, duty_rec, pq_rec, fssai_rec, surv_rec, o_rec, rba_bill_a, rba_bill_b) VALUES (%s);"%(var_string[:-1])
                 cursor.execute(query_s, data)
                 mysql.connection.commit()
                 cursor.close()  
+                return redirect('/home')
+            
+            if 'back' in request.form:
                 return redirect('/home')
 
                 
@@ -285,11 +284,22 @@ def sorted():
                 session['is_sort'] = 1
                 cursor.close()
                 return redirect('/home')
-                
-        
+
     except Exception as e:
         print(e)
         return redirect('/')
+
+@app.route('/update', methods=['GET', 'POST'])
+def update():
+    if request.method =='POST':
+        if request.form.get('b1'):
+            check_box = request.form['b1']
+            cursor = mysql.connection.cursor()
+            cursor.execute("UPDATE imports SET job_status = 1 WHERE srno = %s"%(check_box));
+            mysql.connection.commit()
+            cursor.close()
+        return redirect('/home')
+    
 
 
 if __name__ == "__main__":
