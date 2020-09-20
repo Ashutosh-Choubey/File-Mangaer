@@ -43,7 +43,6 @@ file_fetch = {'eta_date':'d01.pdf',
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    
     if request.method == 'POST':
         session.pop('user_id', None)
         user_details = request.form
@@ -195,11 +194,10 @@ def upload():
                 mysql.connection.commit()
                 cursor.close()  
                 return redirect('/home')
-            
-            
                 
         else:
             return redirect('/')
+        
         return render_template('upload.html')
         
         
@@ -207,46 +205,6 @@ def upload():
             print(e)
             return redirect('/home')
 
-@app.route('/show_importer', methods=['GET', 'POST'])
-def show_importer():
-    if session['user_id']:
-        if request.method == 'POST':
-
-            if 'back' in request.form:
-                return redirect('/home')
-
-            if 'logout' in request.form:
-                session['user_id'] = 0
-                return redirect('/')
-
-        
-
-    return render_template('KYC.html', Impname='voluptas', message=['Hello', 'How', 'Are','You?'])
-
-@app.route('/addnew', methods=['GET', 'POST'])
-def addnew():
-    if session['user_id']:
-        if request.method == 'POST':
-            
-            if 'logout' in request.form:
-                session['user_id'] = 0
-                return redirect('/')
-            
-            if 'back' in request.form:
-                return redirect('/upload')   
-
-            if 'SUBMIT' in request.form:
-                return redirect('/upload') 
-            
-            name = request.form['f1']
-            ic = request.form['f2']
-            pan = request.form['f3']
-            gst = request.form['f4']
-            fssa = request.form['f5']
-
-        
-        
-    return render_template('addnew.html')
 
 
 
@@ -271,9 +229,13 @@ def docview():
 
 @app.route('/docview_kyc', methods=['Get', 'POST'])
 def docview_kyc():
-    if session['user_id']:
-        if request.method == "GET":
-            return redirect('/home')
+    try:
+        if session['user_id']:
+            print(session['user_id'])
+            if request.method == "GET":
+                return redirect('/home')
+    except:
+        return redirect('/')
 
 @app.route('/status', methods = ['GET', 'POST'])
 def status():
@@ -355,6 +317,55 @@ def update():
                 mysql.connection.commit()
                 cursor.close()
             return redirect('/home')
+
+@app.route('/show_importer', methods=['GET', 'POST'])
+def show_importer():
+    try:
+        if session['user_id']:
+            print(session['user_id'])
+            if request.method == 'POST':
+                Impname='optio' 
+                message=['Move','Bitch','Get','Off!!!']
+                if 'back' in request.form:
+                    return redirect('/home')
+
+                if 'logout' in request.form:
+                    session['user_id'] = 0
+                    return redirect('/')
+        
+        return render_template('KYC.html', Impname=Impname, message=message)
+    
+    except Exception as e:
+        return redirect('/')
+
+
+@app.route('/addnew', methods=['GET', 'POST'])
+def addnew():
+    try:
+        if session['user_id']:
+            
+            if request.method == 'POST':
+
+                if 'logout' in request.form:
+                    session['user_id'] = 0
+                    return redirect('/')
+
+                if 'back' in request.form:
+                    return redirect('/upload')   
+
+                if 'SUBMIT' in request.form:
+                    return redirect('/upload') 
+
+                name = request.form['f1']
+                ic = request.form['f2']
+                pan = request.form['f3']
+                gst = request.form['f4']
+                fssa = request.form['f5']
+
+        return render_template('addnew.html')
+   
+    except:
+        return redirect('/')
     
 
 

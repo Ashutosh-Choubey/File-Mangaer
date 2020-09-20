@@ -6,7 +6,7 @@ def web_app(environment, response):
     headers = [('Content-type', 'text/html; charset=utf-8')]
     response(status, headers)
 
-    return fb.render_template('index.html')
+    return None
 
 with make_server('', 8000, web_app) as server:
     print('You can find the site at http://127.0.0.1:8000')
