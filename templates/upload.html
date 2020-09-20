@@ -31,7 +31,9 @@
                     <option value="{{ i }}">{{ i }}</option>
                     {% endfor %}
                 </select>
-                <button class="btn btn-outline-light" style="margin-top:10px;margin-bottom:10px;"><i class="fas fa-plus-square"></i> Add New Importer </button><br>
+                <form method="POST">
+                    <button class="btn btn-outline-light" style="margin-top:10px;margin-bottom:10px;" name="addnew"><i class="fas fa-plus-square"></i> Add New Importer </button><br>
+                </form>
                 <!-- <input type="file"class="  form-control-file" accept="application/pdf,image/jpg"style="margin-top:10px;margin-bottom:10px;" name="d03"><br> -->
                 <b>SHIPPER BL</b><br> <input type=text class="form form-control" placeholder="Enter field 4"name='f4'>
                 <input type="file"class="  form-control-file" accept="application/pdf,image/jpg"style="margin-top:10px;margin-bottom:10px;" name="d04"><br>

@@ -121,6 +121,7 @@ def home():
 
                 
                 if 'logout' in request.form:
+                    session['user_id'] = 0
                     return redirect('/')
            
             if session['is_sort'] == 1:
@@ -138,7 +139,8 @@ def home():
 
 @app.route('/my_redirect')
 def my_redirect():
-    return redirect(url_for('upload'))
+    if session['user_id']:
+        return redirect(url_for('upload'))
 
 
 @app.route('/upload', methods=['GET','POST'])
@@ -146,8 +148,16 @@ def upload():
     try:
         if session['user_id']:
             if request.method == 'POST':
+
                 if 'logout' in request.form:
+                    session['user_id'] = 0
                     return redirect('/')
+                
+                if 'back' in request.form:
+                    return redirect('/home')
+            
+                if 'addnew' in request.form:
+                    return redirect('/addnew')
 
                 cursor = mysql.connection.cursor()
                 data_d = {}
@@ -165,7 +175,6 @@ def upload():
                         f = request.files[f"d{i:02d}"]
                         if f.filename == '':
                             continue
-                    
                         f.save(f"FileUp/{new_srno}/d{i:02d}.pdf")
 
                     print('After save')
@@ -187,9 +196,7 @@ def upload():
                 cursor.close()  
                 return redirect('/home')
             
-            if 'back' in request.form:
-                return redirect('/home')
-
+            
                 
         else:
             return redirect('/')
@@ -199,6 +206,48 @@ def upload():
     except Exception as e:
             print(e)
             return redirect('/home')
+
+@app.route('/show_importer', methods=['GET', 'POST'])
+def show_importer():
+    if session['user_id']:
+        if request.method == 'POST':
+
+            if 'back' in request.form:
+                return redirect('/home')
+
+            if 'logout' in request.form:
+                session['user_id'] = 0
+                return redirect('/')
+
+        
+
+    return render_template('KYC.html', Impname='voluptas', message=['Hello', 'How', 'Are','You?'])
+
+@app.route('/addnew', methods=['GET', 'POST'])
+def addnew():
+    if session['user_id']:
+        if request.method == 'POST':
+            
+            if 'logout' in request.form:
+                session['user_id'] = 0
+                return redirect('/')
+            
+            if 'back' in request.form:
+                return redirect('/upload')   
+
+            if 'SUBMIT' in request.form:
+                return redirect('/upload') 
+            
+            name = request.form['f1']
+            ic = request.form['f2']
+            pan = request.form['f3']
+            gst = request.form['f4']
+            fssa = request.form['f5']
+
+        
+        
+    return render_template('addnew.html')
+
 
 
 @app.route('/docview/', methods=['GET', 'POST'])
@@ -218,6 +267,13 @@ def docview():
     except Exception as e:
         print(e)
         return redirect('/')
+
+
+@app.route('/docview_kyc', methods=['Get', 'POST'])
+def docview_kyc():
+    if session['user_id']:
+        if request.method == "GET":
+            return redirect('/home')
 
 @app.route('/status', methods = ['GET', 'POST'])
 def status():
@@ -244,7 +300,6 @@ def status():
 def sorted():
     try:
         if session['user_id']:
-            
             if request.method == 'POST':
                 global val
                 value = request.form['c1']
@@ -291,14 +346,15 @@ def sorted():
 
 @app.route('/update', methods=['GET', 'POST'])
 def update():
-    if request.method =='POST':
-        if request.form.get('b1'):
-            check_box = request.form['b1']
-            cursor = mysql.connection.cursor()
-            cursor.execute("UPDATE imports SET job_status = 1 WHERE srno = %s"%(check_box));
-            mysql.connection.commit()
-            cursor.close()
-        return redirect('/home')
+    if session['user_id']:
+        if request.method =='POST':
+            if request.form.get('b1'):
+                check_box = request.form['b1']
+                cursor = mysql.connection.cursor()
+                cursor.execute("UPDATE imports SET job_status = 1 WHERE srno = %s"%(check_box));
+                mysql.connection.commit()
+                cursor.close()
+            return redirect('/home')
     
 
 

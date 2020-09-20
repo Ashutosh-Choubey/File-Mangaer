@@ -27,10 +27,10 @@
         </div>
          <div class="col-sm-8 m-5 d-flex  flex-column bg-light rounded">
             <center><h2>{{Impname}}</h2></center> 
-            <h5 class="my-1">IC</h5> <h6 class="my-2">{{message[0]}}</h6> 
-            <h5 class="my-1">PAN</h5><h6 class="my-2">{{message[1]}}</h6> 
-            <h5 class="my-1">GST</h5><h6 class="my-2">{{message[2]}}</h6> 
-            <h5 class="my-1">FSSAI LIC</h5><h6 class="my-2">{{message[3]}}</h6> 
+            <h5 class="my-1">IC</h5> <h6 class="my-2"><a href="{{url_for('docview') }}">{{message[0]}}</a></h6> 
+            <h5 class="my-1">PAN</h5><h6 class="my-2"><a href="{{url_for('docview') }}">{{message[1]}}</a></h6> 
+            <h5 class="my-1">GST</h5><h6 class="my-2"><a href="{{url_for('docview') }}">{{message[2]}}</a></h6> 
+            <h5 class="my-1">FSSAI LIC</h5><h6 class="my-2"><a href="{{url_for('docview') }}">{{message[3]}}</a></h6> 
             
         </div>
         <div class="col-sm-2"></div>
