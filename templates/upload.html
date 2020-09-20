@@ -24,8 +24,15 @@
                 <b>ETA DATE PQ NOC</b><br><input type=date class="form form-control" placeholder="Enter field 1"name="f1"><br>
                 <b>JOB NO FSSAI NOC</b><br> <input type=number class="form form-control" placeholder="Enter field 2"name="f2">
                 <input type="file"class="  form-control-file" accept="application/pdf,image/jpg"style="margin-top:10px;margin-bottom:10px;" name="d02"><br>
-                <b>IMPORTER KYC</b><br> <input type=text class="form form-control" placeholder="Enter field 3"name='f3'>
-                <input type="file"class="  form-control-file" accept="application/pdf,image/jpg"style="margin-top:10px;margin-bottom:10px;" name="d03"><br>
+                <b>IMPORTER KYC</b><br> 
+                <select class="form-control mr-2" name='Criteria'>
+                    <option selected>Select Importer</option>
+                    {% for i in impname%}
+                    <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-outline-light" style="margin-top:10px;margin-bottom:10px;"><i class="fas fa-plus-square"></i> Add New Importer </button><br>
+                <!-- <input type="file"class="  form-control-file" accept="application/pdf,image/jpg"style="margin-top:10px;margin-bottom:10px;" name="d03"><br> -->
                 <b>SHIPPER BL</b><br> <input type=text class="form form-control" placeholder="Enter field 4"name='f4'>
                 <input type="file"class="  form-control-file" accept="application/pdf,image/jpg"style="margin-top:10px;margin-bottom:10px;" name="d04"><br>
                 <b>NO. OF PCKGS DELIVERY ORDER</b><br> <input type=number class="form form-control" placeholder="Enter field 5"name='f5'>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>R B Associates</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link rel="stylesheet" href="../static/css/Stylesheet.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script> <!-- for Deployment-->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><!-- for Development-->
+</head>
+
+<body>
+    <div id ="app">
+        <form method="POST" action="">
+            <nav class=" navbar navbar-expand-lg fixed-top " style="background-color: #dbeaf6ea;">
+            <a class="navbar-brand" href="#">R B Associates</a>
+            <button class="ml-auto mr-2 btn btn-outline-danger" name='logout'><i class="fas fa-power-off"></i></button>  
+            </nav>
+        </form>
+
+    <div class="row  d-flex justify-contet-center rounded" style="margin:5%;margin-top: 5%; background-color: #6cb0e7;">
+     
+        <div class="col-sm-3">
+            <form method="POST">
+                <button type="submit"class="btn btn-outline-light"style="position: absolute;left: 15px;top: 40px;" name='back'><i class='fas fa-arrow-alt-circle-left' aria-hidden="true"></i> <u>Back</u></button>
+            </form>
+        </div>
+        <div class="col-sm-5 m-5 d-flex justify-content-center bg-light rounded">
+            <form class="form-row mt-4" method="POST" enctype="multipart/form-data">
+                <div class="form-group">    
+                    <b>Importer Name</b><br><input type=text class="form form-control" placeholder="Enter Importer Name"name="f1"><br>
+                    <b>IC</b><br> <input type=text class="form form-control" placeholder="Enter IC"name="f2">
+                    <input type="file"class="  form-control-file" accept="application/pdf,image/jpg"style="margin-top:10px;margin-bottom:10px;" name="d02"><br>
+                    <b>PAN</b><br> <input type=number class="form form-control" placeholder="Enter PAN"name="f2">
+                    <input type="file"class="  form-control-file" accept="application/pdf,image/jpg"style="margin-top:10px;margin-bottom:10px;" name="d02"><br>
+                    <b>GST</b><br> <input type=number class="form form-control" placeholder="Enter GST"name="f2">
+                    <input type="file"class="  form-control-file" accept="application/pdf,image/jpg"style="margin-top:10px;margin-bottom:10px;" name="d02"><br>
+                    <b>FSSA LIC</b><br> <input type=number class="form form-control" placeholder="Enter FSSAI LIC"name="f2">
+                    <input type="file"class="  form-control-file" accept="application/pdf,image/jpg"style="margin-top:10px;margin-bottom:10px;" name="d02"><br>
+                    <center><button type="submit" class="btn btn-outline-primary">SUBMIT</button></center>
+                </div>
+            </form> 
+        </div>
+        <div class="col-sm-3"></div>
+       
+    </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+
+
+
+<!-- <div class="col-sm-5 d-flex justify-content-center m-5 rounded" style="background-color:  #6cb0e7;">
+    <form class="form-row mt-4" method="POST" enctype="multipart/form-data">                 
+        <div class="form-group">    
+            <b>ETA DATE PQ NOC</b><br><input type=date class="form form-control" placeholder="Enter field 1"name="f1"><br>
+            <b>JOB NO FSSAI NOC</b><br> <input type=number class="form form-control" placeholder="Enter field 2"name="f2">
+            <input type="file"class="  form-control-file" accept="application/pdf,image/jpg"style="margin-top:10px;margin-bottom:10px;" name="d02"><br> -->

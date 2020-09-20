@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>R B Associates</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link rel="stylesheet" href="../static/css/Stylesheet.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script> <!-- for Deployment-->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script><!-- for Development-->
+</head>
+
+<body>
+    <div id ="app">
+        <form method="POST" action="">
+            <nav class=" navbar navbar-expand-lg fixed-top " style="background-color: #dbeaf6ea;">
+            <a class="navbar-brand" href="#">R B Associates</a>
+            <button class="ml-auto mr-2 btn btn-outline-danger" name='logout'><i class="fas fa-power-off"></i></button>  
+            </nav>
+        </form>
+
+    <div class="row  d-flex justify-contet-center rounded" style="margin:5%;margin-top: 8%; background-color: #6cb0e7;">
+     
+        <div class="col-sm-2"
+        <form method="POST">
+            <button type="submit"class="btn btn-outline-light"style="position: absolute;left: 15px;top: 40px;" name='back'><i class='fas fa-arrow-alt-circle-left' aria-hidden="true"></i> <u>Back</u></button>
+        </form>
+        </div>
+         <div class="col-sm-8 m-5 d-flex  flex-column bg-light rounded">
+            <center><h2>{{Impname}}</h2></center> 
+            <h5 class="my-1">IC</h5> <h6 class="my-2">{{message[0]}}</h6> 
+            <h5 class="my-1">PAN</h5><h6 class="my-2">{{message[1]}}</h6> 
+            <h5 class="my-1">GST</h5><h6 class="my-2">{{message[2]}}</h6> 
+            <h5 class="my-1">FSSAI LIC</h5><h6 class="my-2">{{message[3]}}</h6> 
+            
+        </div>
+        <div class="col-sm-2"></div>
+       
+    </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
