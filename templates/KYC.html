@@ -11,30 +11,28 @@
 
 <body>
     <div id ="app">
-        <form method="POST" action="">
-            <nav class=" navbar navbar-expand-lg fixed-top " style="background-color: #dbeaf6ea;">
+    
+    <form method="POST" action="">
+        <nav class=" navbar navbar-expand-lg fixed-top " style="background-color: #dbeaf6ea;">
             <a class="navbar-brand" href="#">R B Associates</a>
             <button class="ml-auto mr-2 btn btn-outline-danger" name='logout'><i class="fas fa-power-off"></i></button>  
-            </nav>
-        </form>
+        </nav>
+    </form>
 
     <div class="row  d-flex justify-contet-center rounded" style="margin:5%;margin-top: 8%; background-color: #6cb0e7;">
-     
-        <div class="col-sm-2"
+        <div class="col-sm-2">
         <form method="POST">
-            <button type="submit"class="btn btn-outline-light"style="position: absolute;left: 15px;top: 40px;" name='back'><i class='fas fa-arrow-alt-circle-left' aria-hidden="true"></i> <u>Back</u></button>
+            <button name="back"type="submit"class="btn btn-outline-light"style="position: absolute;left: 15px;top: 40px;"><i class='fas fa-arrow-alt-circle-left' aria-hidden="true"></i> <u>Back</u></button>
         </form>
-        </div>
-         <div class="col-sm-8 m-5 d-flex  flex-column bg-light rounded">
+        </div> 
+        <div class="col-sm-8 m-5 d-flex  flex-column bg-light rounded">
             <center><h2>{{Impname}}</h2></center> 
-            <h5 class="my-1">IC</h5> <h6 class="my-2"><a href="{{url_for('docview') }}">{{message[0]}}</a></h6> 
-            <h5 class="my-1">PAN</h5><h6 class="my-2"><a href="{{url_for('docview') }}">{{message[1]}}</a></h6> 
-            <h5 class="my-1">GST</h5><h6 class="my-2"><a href="{{url_for('docview') }}">{{message[2]}}</a></h6> 
-            <h5 class="my-1">FSSAI LIC</h5><h6 class="my-2"><a href="{{url_for('docview') }}">{{message[3]}}</a></h6> 
-            
+            <h5 class="my-1">IC</h5> <h6 class="my-2"><a href="{{url_for('docview_kyc') }}">{{message[0]}}</a></h6> 
+            <h5 class="my-1">PAN</h5><h6 class="my-2"><a href="{{url_for('docview_kyc') }}">{{message[1]}}</a></h6> 
+            <h5 class="my-1">GST</h5><h6 class="my-2"><a href="{{url_for('docview_kyc') }}">{{message[2]}}</a></h6> 
+            <h5 class="my-1">FSSAI LIC</h5><h6 class="my-2"><a href="{{url_for('docview_kyc') }}">{{message[3]}}</a></h6> 
         </div>
         <div class="col-sm-2"></div>
-       
     </div>
     </div>
 

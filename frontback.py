@@ -60,6 +60,7 @@ def index():
             
             print("SUCCESS")
             return redirect(url_for('home'))
+        
         else:
             return redirect('/')
         cursor.close()
@@ -233,7 +234,7 @@ def docview_kyc():
         if session['user_id']:
             print(session['user_id'])
             if request.method == "GET":
-                return redirect('/home')
+                return send_from_directory(f'FileUp/13','d03.pdf')
     except:
         return redirect('/')
 
@@ -317,6 +318,8 @@ def update():
                 mysql.connection.commit()
                 cursor.close()
             return redirect('/home')
+    else:
+        return redirect('/')
 
 @app.route('/show_importer', methods=['GET', 'POST'])
 def show_importer():
@@ -324,18 +327,22 @@ def show_importer():
         if session['user_id']:
             print(session['user_id'])
             if request.method == 'POST':
-                Impname='optio' 
-                message=['Move','Bitch','Get','Off!!!']
-                if 'back' in request.form:
-                    return redirect('/home')
+                #Impname='optio' 
+                #message=['Move','Bitch','Get','Off!!!']
 
                 if 'logout' in request.form:
                     session['user_id'] = 0
                     return redirect('/')
-        
-        return render_template('KYC.html', Impname=Impname, message=message)
-    
+
+                if 'back' in request.form:
+                    print('Got back request')
+                    return redirect('/home')
+            return render_template('KYC.html', Impname='optio', message=['Hello', 'Motherfucker', 'How', 'You doin?'])
+        else:
+            return redirect('/')
+
     except Exception as e:
+        print(e)
         return redirect('/')
 
 
@@ -343,9 +350,8 @@ def show_importer():
 def addnew():
     try:
         if session['user_id']:
-            
             if request.method == 'POST':
-
+                
                 if 'logout' in request.form:
                     session['user_id'] = 0
                     return redirect('/')
@@ -361,10 +367,14 @@ def addnew():
                 pan = request.form['f3']
                 gst = request.form['f4']
                 fssa = request.form['f5']
+            
+            if request.method == 'GET':
+                print(session['user_id'])
 
         return render_template('addnew.html')
    
-    except:
+    except Exception as e:
+        print(e)
         return redirect('/')
     
 
