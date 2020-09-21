@@ -26,14 +26,14 @@
         </form>
         </div> 
         <div class="col-sm-8 m-5 d-flex  flex-column bg-light rounded">
-            <center><h2>{{message[0]}}</h2></center> 
-            <form method='POST' action="{{url_for('docview_kyc') }}"><h5 class="my-1">IC</h5> <h6 class="my-2"><button class="btn" name='b1'type='submit'value ="{{message[0]}}'+'d01"style="border:1px solid black;" >{{message[1]}}</button></h6> </form>
-            <form method='POST' action="{{url_for('docview_kyc') }}"><h5 class="my-1">PAN</h5><h6 class="my-2"><button class="btn" name='b1'type='submit'value ="{{message[0]}}'+'d01"style="border:1px solid black;">{{message[2]}}</button></h6> </form>
-            <form method='POST' action="{{url_for('docview_kyc') }}"><h5 class="my-1">GST</h5><h6 class="my-2"><button class="btn" name='b1'type='submit'value ="{{message[0]}}'+'d01"style="border:1px solid black;">{{message[3]}}</button></h6> </form>
-            <form method='POST' action="{{url_for('docview_kyc') }}"><h5 class="my-1">FSSAI LIC</h5><h6 class="my-2"><button class="btn" name='b1'type='submit'value ="{{message[0]}}'+'d01"style="border:1px solid black;">{{message[4]}}</button></h6> </form>
-            <form method="POST">
-                <button name="update"type="submit"class="btn btn-outline-dark"style="position: absolute;left: 90%;top: 40px;padding-top:0.85px;padding-bottom:0.85px;padding:2px"><i class='fas fa-edit' aria-hidden="true"></i> <u>EDIT</u></button>
-            </form>
+            <center><h2>{{message[0]}}</h2> 
+            <form method='POST' action="{{url_for('docview_kyc') }}">
+                <h5 class="my-1">IC</h5> <h6 class="my-2"><input class="btn" name='b1'type='text'value ="{{message[0]}}'+'d01"style="border:1px solid black;" ></h6> 
+                <h5 class="my-1">PAN</h5><h6 class="my-2"> <input class="btn" name='b2'type='text'value ="{{message[0]}}'+'d01" style="border:1px solid black;"></h6> 
+                <h5 class="my-1">GST</h5><h6 class="my-2"><input class="btn" name='b3'type='text'value ="{{message[0]}}'+'d01" style="border:1px solid black;"></h6> 
+                <h5 class="my-1">FSSAI LIC</h5><h6 class="my-2"><input class="btn" name='b4'type='text'value ="{{message[0]}}'+'d01" style="border:1px solid black;"></h6> 
+                <button name="update"type="submit"class="btn btn-outline-dark my-2"><i class='fas fa-edit' aria-hidden="true"></i> <u>Update</u></button>
+            </form></center>
         </div>
         <div class="col-sm-2">
             
