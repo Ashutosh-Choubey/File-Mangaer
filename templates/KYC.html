@@ -26,11 +26,11 @@
         </form>
         </div> 
         <div class="col-sm-8 m-5 d-flex  flex-column bg-light rounded">
-            <center><h2>{{Impname}}</h2></center> 
-            <h5 class="my-1">IC</h5> <h6 class="my-2"><a href="{{url_for('docview_kyc') }}">{{message[0]}}</a></h6> 
-            <h5 class="my-1">PAN</h5><h6 class="my-2"><a href="{{url_for('docview_kyc') }}">{{message[1]}}</a></h6> 
-            <h5 class="my-1">GST</h5><h6 class="my-2"><a href="{{url_for('docview_kyc') }}">{{message[2]}}</a></h6> 
-            <h5 class="my-1">FSSAI LIC</h5><h6 class="my-2"><a href="{{url_for('docview_kyc') }}">{{message[3]}}</a></h6> 
+            <center><h2>{{message[0]}}</h2></center> 
+            <form method='POST' action="{{url_for('docview_kyc') }}"><h5 class="my-1">IC</h5> <h6 class="my-2"><button name='b1'type='submit'value ="{{message[0]}}'+'d01" >{{message[1]}}</button></h6> </form>
+            <form method='POST' action="{{url_for('docview_kyc') }}"><h5 class="my-1">PAN</h5><h6 class="my-2"><button name='b1'type='submit'value ="{{message[0]}}'+'d01">{{message[2]}}</button></h6> </form>
+            <form method='POST' action="{{url_for('docview_kyc') }}"><h5 class="my-1">GST</h5><h6 class="my-2"><button name='b1'type='submit'value ="{{message[0]}}'+'d01">{{message[3]}}</button></h6> </form>
+            <form method='POST' action="{{url_for('docview_kyc') }}"><h5 class="my-1">FSSAI LIC</h5><h6 class="my-2"><button name='b1'type='submit'value ="{{message[0]}}'+'d01">{{message[4]}}</button></h6> </form>
         </div>
         <div class="col-sm-2"></div>
     </div>

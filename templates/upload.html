@@ -25,9 +25,9 @@
                 <b>JOB NO FSSAI NOC</b><br> <input type=number class="form form-control" placeholder="Enter field 2"name="f2">
                 <input type="file"class="  form-control-file" accept="application/pdf,image/jpg"style="margin-top:10px;margin-bottom:10px;" name="d02"><br>
                 <b>IMPORTER KYC</b><br> 
-                <select class="form-control mr-2" name='Criteria'>
+                <select class="form-control mr-2" name='f3'>
                     <option selected>Select Importer</option>
-                    {% for i in impname%}
+                    {% for i in new_imp%}
                     <option value="{{ i }}">{{ i }}</option>
                     {% endfor %}
                 </select>

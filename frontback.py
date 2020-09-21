@@ -130,7 +130,9 @@ def home():
             status_check = 'unchecked'
             today = date.today().strftime('%d/%m/%Y')
 
-        return render_template('home.html', temp_data=temp_data, current_view = view, col_data=col_data, status_check=status_check, date=today)   
+            return render_template('home.html', temp_data=temp_data, current_view = view, col_data=col_data, status_check=status_check, date=today)   
+        else:
+            return redirect('/')
      
     except Exception as e:
         print(e)
@@ -141,12 +143,21 @@ def home():
 def my_redirect():
     if session['user_id']:
         return redirect(url_for('upload'))
+    else:
+        return redirect('/')
 
 
 @app.route('/upload', methods=['GET','POST'])
 def upload():
     try:
+        new_imp=[]
+        cursor = mysql.connection.cursor()
         if session['user_id']:
+            
+            cursor.execute("select impname from imp_details order by impname asc;")
+            imname = cursor.fetchall()
+            for i in imname:
+                new_imp.append(i[0])
             if request.method == 'POST':
 
                 if 'logout' in request.form:
@@ -158,8 +169,7 @@ def upload():
             
                 if 'addnew' in request.form:
                     return redirect('/addnew')
-
-                cursor = mysql.connection.cursor()
+                
                 data_d = {}
                 data = []
                 cursor.execute('SELECT MAX(srno) from imports;')
@@ -171,35 +181,29 @@ def upload():
                 os.mkdir('FileUp/'+str(new_srno))
                 for i in range(1,23):
                     data.append(None)
-                    if (i != 1) and (i != 9):
+                    if (i != 1) and (i != 9) and (i!=3):
                         f = request.files[f"d{i:02d}"]
                         if f.filename == '':
                             continue
                         f.save(f"FileUp/{new_srno}/d{i:02d}.pdf")
-
-                    print('After save')
                     t_data = request.form['f{}'.format(i)]
-                    
-                    if (i==1 or i==9) and (t_data == ''):
+                    if (i==1 or i==9 or i==3) and (t_data == ''):
                         t_data = None
-                        
                     data_d[i-1]=t_data
                 
                 for key in data_d:
                     data[key] = data_d[key]
                 
                 var_string = '%s,'*len(data)
-                
                 query_s = "INSERT INTO imports (eta_date, job, impname, shipper, pks, invoice_no, comm, be, be_date, container_no, phyto, st_duty, yield, ship_rec, cfs, duty_rec, pq_rec, fssai_rec, surv_rec, o_rec, rba_bill_a, rba_bill_b) VALUES (%s);"%(var_string[:-1])
                 cursor.execute(query_s, data)
                 mysql.connection.commit()
                 cursor.close()  
                 return redirect('/home')
-                
+            return render_template('upload.html', new_imp=new_imp)
+        
         else:
             return redirect('/')
-        
-        return render_template('upload.html')
         
         
     except Exception as e:
@@ -218,11 +222,10 @@ def docview():
                 db_srno = (request.form['b1']).split('^')[0]
                 col = (request.form['b1']).split('^')[1].split(',')[0]
                 col_name = file_fetch.get(col)
-                print(db_srno)
-                print(col_name)
                 
                 return send_from_directory(f'FileUp/{db_srno}',col_name)
-    
+        else:
+            return redirect('/')
     except Exception as e:
         print(e)
         return redirect('/')
@@ -232,9 +235,14 @@ def docview():
 def docview_kyc():
     try:
         if session['user_id']:
-            print(session['user_id'])
-            if request.method == "GET":
-                return send_from_directory(f'FileUp/13','d03.pdf')
+            if request.method =='POST':
+                name = (request.form['b1']).split('+')[0]
+                fname = (request.form['b1']).split('+')[1]
+                print(name)
+                print(fname)
+                return send_from_directory(f'FileUp/{name}','{fname}'+'.pdf')
+        else:
+            return redirect('/')
     except:
         return redirect('/')
 
@@ -253,7 +261,8 @@ def status():
                 session['status'] = 2
                     
             return redirect('/home')
-        
+        else:
+            return redirect('/')
 
     except Exception as e:
         print(e)
@@ -302,6 +311,8 @@ def sorted():
                 session['is_sort'] = 1
                 cursor.close()
                 return redirect('/home')
+        else:
+            return redirect('/')
 
     except Exception as e:
         print(e)
@@ -324,20 +335,29 @@ def update():
 @app.route('/show_importer', methods=['GET', 'POST'])
 def show_importer():
     try:
+        message = []
+        details = []
         if session['user_id']:
-            print(session['user_id'])
+            
             if request.method == 'POST':
-                #Impname='optio' 
-                #message=['Move','Bitch','Get','Off!!!']
-
+                
+                name = (request.form['b1']).split('^')[1].split(',')[0]
+                cursor = mysql.connection.cursor()
+                cursor.execute("select impname, ic, gst, pan, fssai from imp_details where impname = %s;"%(name))                
+                details = cursor.fetchone()
+                
+                for detail in details:
+                    message.append(detail)
+                
                 if 'logout' in request.form:
                     session['user_id'] = 0
                     return redirect('/')
-
+                
                 if 'back' in request.form:
-                    print('Got back request')
                     return redirect('/home')
-            return render_template('KYC.html', Impname='optio', message=['Hello', 'Motherfucker', 'How', 'You doin?'])
+
+
+            return render_template('KYC.html',message=details)
         else:
             return redirect('/')
 
@@ -349,6 +369,7 @@ def show_importer():
 @app.route('/addnew', methods=['GET', 'POST'])
 def addnew():
     try:
+        data = []
         if session['user_id']:
             if request.method == 'POST':
                 
@@ -358,21 +379,38 @@ def addnew():
 
                 if 'back' in request.form:
                     return redirect('/upload')   
-
-                if 'SUBMIT' in request.form:
-                    return redirect('/upload') 
-
-                name = request.form['f1']
-                ic = request.form['f2']
-                pan = request.form['f3']
-                gst = request.form['f4']
-                fssa = request.form['f5']
             
-            if request.method == 'GET':
-                print(session['user_id'])
+                if 'SUBMIT' in request.form:
+                    name = request.form['f1']
+                    ic = request.form['f2']
+                    pan = request.form['f3']
+                    gst = request.form['f4']
+                    fssa = request.form['f5']
+                    cursor = mysql.connection.cursor()
+                    cursor.execute("insert into imp_details (impname, ic, gst, pan, fssai) values (\'%s\', \'%s\', \'%s\', \'%s\',\'%s\');"%(name, ic, pan, gst, fssa))
+                    mysql.connection.commit()
+                    cursor.close()
+                    os.mkdir('Importer_details/'+name)
+                    
+                    for i in range(1,5):
+                        print(1)
+                        data.append(None)
+                        print(2)
+                        f = request.files[f"d{i:02d}"]
+                        print(3)
+                        if f.filename == '':
+                            continue
+                        print(4)
+                        f.save(f"Importer_details/{name}/d{i:02d}.pdf")
+                        print(5)
+                        print('After save')
+                    return redirect('/upload')
 
-        return render_template('addnew.html')
-   
+            return render_template('addnew.html')
+       
+        else:
+            return redirect('/')
+    
     except Exception as e:
         print(e)
         return redirect('/')
