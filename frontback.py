@@ -177,7 +177,7 @@ def upload():
                     srno[0] = 0
                 new_srno = srno[0]+1
                 os.mkdir('FileUp/'+str(new_srno))
-                for i in range(1,23):
+                for i in range(1,24):
                     data.append(None)
                     if (i != 1) and (i != 9) and (i!=3):
                         f = request.files[f"d{i:02d}"]
