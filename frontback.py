@@ -338,6 +338,20 @@ def show_importer():
         if session['user_id']:
             
             if request.method == 'POST':
+                if 'back' in request.form:
+                    return redirect('/home')
+                
+                if 'logout' in request.form:
+                    session['user_id'] = 0
+                    return redirect('/')
+
+                if 'show' in request.form:
+                    mess1 = request.form['mess1']
+                    mess2 = request.form['mess2']
+                    mess3 = request.form['mess3']
+                    mess4 = request.form['mess4']
+                    mess5 = request.form['mess5']
+                    return render_template('KYC.html', message=[mess1,mess2,mess3,mess4,mess5])
                 
                 name = (request.form['b1']).split('^')[0].split(',')[0]
                 cursor = mysql.connection.cursor()
@@ -347,53 +361,66 @@ def show_importer():
                 for detail in details:
                     message.append(detail)
                 
-                if 'logout' in request.form:
-                    session['user_id'] = 0
-                    return redirect('/')
                 
-                if 'back' in request.form:
-                    return redirect('/home')
-
                 if 'update' in request.form:
                     return redirect('/update_importer')
+            
+                
+                
 
 
             return render_template('KYC.html',message=details)
-        else:
+        else:   
             return redirect('/')
 
     except Exception as e:
         print(e)
         return redirect('/')
 
+global message1
+message1 = []
 @app.route('/show_update_importer', methods=['GET','POST'])
 def show_update_importer():
+    details = []
+    data = []
     try:
-        details = []
-        message = []
+        cursor = mysql.connection.cursor()    
         if session['user_id']:
             if request.method =='POST':
                 if 'edit' in request.form:
+                    global impname
                     impname = request.form['edit']
-                    cursor = mysql.connection.cursor()
                     cursor.execute("select impname, ic, gst, pan, fssai from imp_details where impname = \'%s\';"%(impname))                
                     details = cursor.fetchone()
                     for detail in details:
-                        message.append(detail)
+                        message1.append(detail)    
 
                 if 'update' in request.form:
                     ic =  request.form['b1']
                     pan = request.form['b2']
                     gst = request.form['b3']
                     lic = request.form['b4']
-                    #cursor.execute()
-                    #cursor.close()
-                    return redirect('/show_importer')
-                
-                if 'back' in request.form:
+                    updates = [ic, pan, gst, lic, impname]
+                    print(updates)
+                    cursor.execute('UPDATE imp_details SET ic = %s, gst = %s, pan = %s, fssai = %s WHERE impname = \'%s\';'%(updates[0],updates[1],updates[2],updates[3],updates[4]))
+                    mysql.connection.commit()
+                    cursor.close()
+                    
+                    for i in range(1,5):
+                        data.append(None)
+                        f = request.files[f"d{i:02d}"]
+                        if f.filename == '':
+                            continue
+                        os.remove(f"Importer_details/{impname}/d{i:02d}.pdf")
+                        f.save(f"Importer_details/{impname}/d{i:02d}.pdf")
+                        print('After save')
                     return redirect('/home')
 
-            return render_template('Update.html', message=message)
+                if 'logout' in request.form:
+                    session['user_id'] =0 
+                    return redirect('/')
+                
+            return render_template('Update.html', message=message1)
         else:
             return redirect('/')
 
