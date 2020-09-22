@@ -27,11 +27,11 @@
         </div> 
         <div class="col-sm-8 m-5 d-flex  flex-column bg-light rounded">
             <center><h2>{{message[0]}}</h2> 
-            <form method='POST' action="{{url_for('docview_kyc') }}">
-                <h5 class="my-1">IC</h5> <h6 class="my-2"><input class="btn" name='b1'type='text'value ="{{message[0]}}'+'d01"style="border:1px solid black;" ></h6> 
-                <h5 class="my-1">PAN</h5><h6 class="my-2"> <input class="btn" name='b2'type='text'value ="{{message[0]}}'+'d01" style="border:1px solid black;"></h6> 
-                <h5 class="my-1">GST</h5><h6 class="my-2"><input class="btn" name='b3'type='text'value ="{{message[0]}}'+'d01" style="border:1px solid black;"></h6> 
-                <h5 class="my-1">FSSAI LIC</h5><h6 class="my-2"><input class="btn" name='b4'type='text'value ="{{message[0]}}'+'d01" style="border:1px solid black;"></h6> 
+            <form method='POST'>
+                <h5 class="my-1">IC</h5> <h6 class="my-2"><input class="btn" name='b1'type='text'value ="{{message[1]}}"style="border:1px solid black;" ></h6> 
+                <h5 class="my-1">PAN</h5><h6 class="my-2"> <input class="btn" name='b2'type='text'value ="{{message[2]}}" style="border:1px solid black;"></h6> 
+                <h5 class="my-1">GST</h5><h6 class="my-2"><input class="btn" name='b3'type='text'value ="{{message[3]}}" style="border:1px solid black;"></h6> 
+                <h5 class="my-1">FSSAI LIC</h5><h6 class="my-2"><input class="btn" name='b4'type='text'value ="{{message[4]}}" style="border:1px solid black;"></h6> 
                 <button name="update"type="submit"class="btn btn-outline-dark my-2"><i class='fas fa-edit' aria-hidden="true"></i> <u>Update</u></button>
             </form></center>
         </div>

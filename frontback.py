@@ -41,6 +41,7 @@ file_fetch = {'eta_date':'d01.pdf',
                'rba_bill_a':'d21.pdf',
                'rba_bill_b':'d22.pdf'}
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -71,9 +72,7 @@ def index():
 def home():
     try:
         if session['user_id']:
-            
             cursor = mysql.connection.cursor()
-
             if session['status'] == 0:
                 view= 'Pending'
                 cursor.execute('SELECT * from pending')
@@ -92,7 +91,6 @@ def home():
             cursor.close() 
             
             if request.method == 'POST':
-                
                 if 'search_b' in request.form:
                     print('Entered loop')
                     try:
@@ -119,7 +117,6 @@ def home():
                     except Exception:
                         flash('Not Found!')
 
-                
                 if 'logout' in request.form:
                     session['user_id'] = 0
                     return redirect('/')
@@ -127,6 +124,7 @@ def home():
             if session['is_sort'] == 1:
                     session['is_sort'] = 0
                     temp_data = session['sort_data']
+            
             status_check = 'unchecked'
             today = date.today().strftime('%d/%m/%Y')
 
@@ -205,11 +203,9 @@ def upload():
         else:
             return redirect('/')
         
-        
     except Exception as e:
             print(e)
             return redirect('/home')
-
 
 
 
@@ -246,6 +242,7 @@ def docview_kyc():
     except:
         return redirect('/')
 
+
 @app.route('/status', methods = ['GET', 'POST'])
 def status():
     try:
@@ -267,6 +264,7 @@ def status():
     except Exception as e:
         print(e)
         return redirect('/')
+
 
 @app.route('/sorted', methods=['GET', 'POST'])
 def sorted():
@@ -341,9 +339,9 @@ def show_importer():
             
             if request.method == 'POST':
                 
-                name = (request.form['b1']).split('^')[1].split(',')[0]
+                name = (request.form['b1']).split('^')[0].split(',')[0]
                 cursor = mysql.connection.cursor()
-                cursor.execute("select impname, ic, gst, pan, fssai from imp_details where impname = %s;"%(name))                
+                cursor.execute("select impname, ic, gst, pan, fssai from imp_details where impname = \'%s\';"%(name))                
                 details = cursor.fetchone()
                 
                 for detail in details:
@@ -356,6 +354,9 @@ def show_importer():
                 if 'back' in request.form:
                     return redirect('/home')
 
+                if 'update' in request.form:
+                    return redirect('/update_importer')
+
 
             return render_template('KYC.html',message=details)
         else:
@@ -365,6 +366,45 @@ def show_importer():
         print(e)
         return redirect('/')
 
+@app.route('/show_update_importer', methods=['GET','POST'])
+def show_update_importer():
+    try:
+        details = []
+        message = []
+        if session['user_id']:
+            if request.method =='POST':
+                if 'edit' in request.form:
+                    impname = request.form['edit']
+                    cursor = mysql.connection.cursor()
+                    cursor.execute("select impname, ic, gst, pan, fssai from imp_details where impname = \'%s\';"%(impname))                
+                    details = cursor.fetchone()
+                    for detail in details:
+                        message.append(detail)
+
+                if 'update' in request.form:
+                    ic =  request.form['b1']
+                    pan = request.form['b2']
+                    gst = request.form['b3']
+                    lic = request.form['b4']
+                    #cursor.execute()
+                    #cursor.close()
+                    return redirect('/show_importer')
+                
+                if 'back' in request.form:
+                    return redirect('/home')
+
+            return render_template('Update.html', message=message)
+        else:
+            return redirect('/')
+
+    except Exception as e:
+        print(e)
+        return redirect('/')
+'''
+@app.route('/update_importer', methods=['GET', 'POST'])
+def update_importer():
+    if session['user_id']:
+'''        
 
 @app.route('/addnew', methods=['GET', 'POST'])
 def addnew():
