@@ -76,16 +76,16 @@
         {% if current_view!='Completed' %}
         <th>Mark Completed</th>
         {% endif %} 			
-        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[1] ]]">ETA DATE PQ NOC</button></form></th>
-        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[2] ]]">JOB NO FSSAI NOC</button></form></th>
-        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[3] ]]">IMPORTER KYC</button></form></th>
-        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[4] ]]">BL</button></form></th>
-        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[5] ]]">NO. OF PCKGS DELIVERY ORDER</button></form></th>
+        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[1] ]]">ETA DATE/PQ NOC</button></form></th>
+        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[2] ]]">JOB NO/FSSAI NOC</button></form></th>
+        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[3] ]]">IMPORTER NAME</button></form></th>
+        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[4] ]]">SHIPPER/BL</button></form></th>
+        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[5] ]]">NO. OF PCKGS/DELIVERY ORDER</button></form></th>
         <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[6] ]]">INVOICE NUMBER </button></form>	</th>
-        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[7] ]]">COMMODITY COO </button></form></th>
+        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[7] ]]">COMMODITY/COO </button></form></th>
         <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[8] ]]">BILL OF ENTRY</button></form></th>
-        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[9] ]]">BE DATE EXM ORDER</button></form></th>
-        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[10] ]]">CONTAINER NO PACKING LIST </button></form></th>
+        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[9] ]]">BE DATE/EXM ORDER</button></form></th>
+        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[10] ]]">CONTAINER NO/PACKING LIST </button></form></th>
         <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[11] ]]">PHYTO CERT</button></form></th>
         <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[12] ]]">STAMP DUTY</button></form></th>
         <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[13] ]]">YIELD CERT</button></form></th>
@@ -96,6 +96,7 @@
         <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[18] ]]">FSSAI RECEIPT</button></form></th>
         <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[19] ]]">SURVEY RECEIPT</button></form></th>
         <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[20] ]]">OTHER RECEIPTS</button></form></th>
+        <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[23] ]]">CHALLANA/GR</button></form></th>
         <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[21] ]]">RBA BILL PART A</button></form></th>
         <th><form method="POST" action="{{ url_for('sorted') }}" ><button class="btn font-weight-bold" name="c1" type="submit" :value="[[ col[22] ]]">RBA BILL PART B</button></form></th>    
       </tr>
@@ -125,6 +126,7 @@
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[18] ]]" >[[ i[18] ]] </button> </form></td>
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[19] ]]" >[[ i[19] ]] </button> </form></td>
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[20] ]]" >[[ i[20] ]] </button> </form></td>        
+        <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[23] ]]" >[[ i[23] ]] </button> </form></td>
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[21] ]]" >[[ i[21] ]] </button> </form></td>
         <td><form method="POST" action="{{ url_for('docview') }}" ><button class="btn" type="submit" name = "b1":value="[[ i[0] ]] +'^'+ [[ col[22] ]]" >[[ i[22] ]] </button> </form></td>
       <!-- </b v-if='date >[[i[1] ]]'>  -->
