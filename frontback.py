@@ -2,8 +2,8 @@ from flask import Flask, render_template, url_for, request, redirect, send_file,
 from flask_mysqldb import MySQL 
 import yaml 
 import os
-import pprint 
 from datetime import date
+
 
 app = Flask(__name__)
 
@@ -19,27 +19,27 @@ mysql = MySQL(app)
 val = None
 state = {'value':val, 'stat':0}
 file_fetch = {'eta_date':'d01.pdf',
-               'job':'d02.pdf',
-               'impname':'d03.pdf',
-               'shipper':'d04.pdf',
-               'pks':'d05.pdf',
-               'invoice_no':'d06.pdf',
-               'comm':'d07.pdf',
-               'be':'d08.pdf',
-               'be_date':'d09.pdf',
-               'container_no':'d10.pdf',
-               'phyto':'d11.pdf',
-               'st_duty':'d12.pdf',
-               'yield':'d13.pdf',
-               'ship_rec':'d14.pdf',
-               'cfs':'d15.pdf',
-               'duty_rec':'d16.pdf',
-               'pq_rec':'d17.pdf',
-               'fssai_rec':'d18.pdf',
-               'surv_rec':'d19.pdf',
-               'o_rec':'d20.pdf',
-               'rba_bill_a':'d21.pdf',
-               'rba_bill_b':'d22.pdf'}
+            'job':'d02.pdf',
+            'impname':'d03.pdf',
+            'shipper':'d04.pdf',
+            'pks':'d05.pdf',
+            'invoice_no':'d06.pdf',
+            'comm':'d07.pdf',
+            'be':'d08.pdf',
+            'be_date':'d09.pdf',
+            'container_no':'d10.pdf',
+            'phyto':'d11.pdf',
+            'st_duty':'d12.pdf',
+            'yield':'d13.pdf',
+            'ship_rec':'d14.pdf',
+            'cfs':'d15.pdf',
+            'duty_rec':'d16.pdf',
+            'pq_rec':'d17.pdf',
+            'fssai_rec':'d18.pdf',
+            'surv_rec':'d19.pdf',
+            'o_rec':'d20.pdf',
+            'rba_bill_a':'d21.pdf',
+            'rba_bill_b':'d22.pdf'}
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -120,7 +120,7 @@ def home():
                 if 'logout' in request.form:
                     session['user_id'] = 0
                     return redirect('/')
-           
+        
             if session['is_sort'] == 1:
                     session['is_sort'] = 0
                     temp_data = session['sort_data']
@@ -131,7 +131,7 @@ def home():
             return render_template('home.html', temp_data=temp_data, current_view = view, col_data=col_data, status_check=status_check, date=today)   
         else:
             return redirect('/')
-     
+    
     except Exception as e:
         print(e)
         return redirect('/')
@@ -474,15 +474,14 @@ def addnew():
                     return redirect('/upload')
 
             return render_template('addnew.html')
-       
+    
         else:
             return redirect('/')
     
     except Exception as e:
         print(e)
         return redirect('/')
-    
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+        app.run(debug=True)
