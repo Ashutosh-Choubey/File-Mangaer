@@ -10,5 +10,4 @@ def web_app(environment, response):
 
 with make_server('', 8000, web_app) as server:
     print('You can find the site at http://127.0.0.1:8000')
-
     server.serve_forever()
