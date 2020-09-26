@@ -7,12 +7,12 @@ from datetime import date
 
 app = Flask(__name__)
 
-db = yaml.load(open('db.yaml'))
-app.config['MYSQLDB_HOST'] = db['mysql_host']
-app.config['MYSQLDB_USER'] = db['mysql_user']
-app.config['MYSQLDB_PASSWORD'] = db['mysql_password']
-app.config['MYSQL_DB'] = db['mysql_db']
-app.config['MYSQL_UPLOAD_FILES'] = db['mysql_fileStored']
+#db = yaml.safe_load(open('db.yaml'))
+app.config['MYSQLDB_HOST'] = 'localhost'
+app.config['MYSQLDB_USER'] = 'root'
+app.config['MYSQLDB_PASSWORD'] = 'rootpassword'
+app.config['MYSQL_DB'] = 'RBA'
+#app.config['MYSQL_UPLOAD_FILES'] = db['mysql_fileStored']
 app.secret_key = 'jobhitulikhnachaheBongoliMC'
 mysql = MySQL(app)
 
