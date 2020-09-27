@@ -3,5 +3,8 @@
         {
             "path": "."
         }
-    ]
+    ],
+    "settings": {
+        "python.pythonPath": "C:\\Users\\Hrushit\\AppData\\Local\\Programs\\Python\\Python38\\python.exe"
+    }
 }
