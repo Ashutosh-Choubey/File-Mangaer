@@ -18,7 +18,18 @@
         <button class="ml-auto mr-2 btn btn-outline-danger" name='logout'><i class="fas fa-power-off"></i></button>  
       </nav>
   </form>
-  
+  {% block content %}
+  <div class="container"style="margin-top:5%">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% block page_content %}{% endblock %}
+  </div>
+  {% endblock %}
 
   <div class="col-sm-# rounded" style="margin: 10%;padding:1%;margin-bottom: 3%;background-color: #6cb0e7;" >
     <div class="form-inline">

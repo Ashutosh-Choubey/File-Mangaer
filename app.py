@@ -8,9 +8,9 @@ from datetime import date
 app = Flask(__name__)
 
 #db = yaml.safe_load(open('db.yaml'))
-app.config['MYSQLDB_HOST'] = 'localhost'
-app.config['MYSQLDB_USER'] = 'Hrushit'
-app.config['MYSQLDB_PASSWORD'] = ''
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'Hrushit'
+app.config['MYSQL_PASSWORD'] = 'Hr0cketss@12357'
 app.config['MYSQL_DB'] = 'RBA'
 #app.config['MYSQL_UPLOAD_FILES'] = db['mysql_fileStored']
 app.secret_key = 'jobhitulikhnachaheBongoliMC'
@@ -172,6 +172,7 @@ def upload():
                 data = []
                 cursor.execute('SELECT MAX(srno) from imports;')
                 srno = cursor.fetchone()
+               
                 
                 if srno[0] == 'NULL':
                     srno[0] = 0
@@ -193,10 +194,12 @@ def upload():
                     data[key] = data_d[key]
                 
                 var_string = '%s,'*len(data)
-                query_s = "INSERT INTO imports (eta_date, job, impname, shipper, pks, invoice_no, comm, be, be_date, container_no, phyto, st_duty, yield, ship_rec, cfs, duty_rec, pq_rec, fssai_rec, surv_rec, o_rec, rba_bill_a, rba_bill_b) VALUES (%s);"%(var_string[:-1])
+                query_s = "INSERT INTO imports (eta_date, job, impname, shipper, pks, invoice_no, comm, be, be_date, container_no, phyto, st_duty, yield, ship_rec, cfs, duty_rec, pq_rec, fssai_rec, surv_rec, o_rec, rba_bill_a, rba_bill_b, challan) VALUES (%s);"%(var_string[:-1])
                 cursor.execute(query_s, data)
                 mysql.connection.commit()
                 cursor.close()  
+                
+                
                 return redirect('/home')
             return render_template('upload.html', new_imp=new_imp)
         
@@ -215,11 +218,15 @@ def docview():
     try:
         if session['user_id']:
             if request.method == 'POST':
-                db_srno = (request.form['b1']).split('^')[0]
-                col = (request.form['b1']).split('^')[1].split(',')[0]
-                col_name = file_fetch.get(col)
-                
-                return send_from_directory(f'FileUp/{db_srno}',col_name)
+                try:
+                    db_srno = (request.form['b1']).split('^')[0]
+                    col = (request.form['b1']).split('^')[1].split(',')[0]
+                    col_name = file_fetch.get(col)
+                    
+                    return send_from_directory(f'FileUp/{db_srno}',col_name)
+                except Exception:
+                    flash("Looks like there's no file to show!")
+                    return redirect('/home')         
         else:
             return redirect('/')
     except Exception as e:
@@ -323,7 +330,7 @@ def update():
             if request.form.get('b1'):
                 check_box = request.form['b1']
                 cursor = mysql.connection.cursor()
-                cursor.execute("UPDATE imports SET job_status = 1 WHERE srno = %s"%(check_box));
+                cursor.execute("UPDATE imports SET job_status = 1 WHERE srno = %s;"%(check_box))
                 mysql.connection.commit()
                 cursor.close()
             return redirect('/home')
@@ -333,7 +340,7 @@ def update():
 @app.route('/show_importer', methods=['GET', 'POST'])
 def show_importer():
     try:
-        message = []
+        # message = []
         details = []
         if session['user_id']:
             
@@ -355,12 +362,11 @@ def show_importer():
                 
                 name = (request.form['b1']).split('^')[0].split(',')[0]
                 cursor = mysql.connection.cursor()
-                cursor.execute("select impname, ic, gst, pan, fssai from imp_details where impname = \'%s\';"%(name))                
+                cursor.execute("select impname, ic, gst, pan, fssai, exp from imp_details where impname = \'%s\';"%(name))                
                 details = cursor.fetchone()
                 cursor.close()
-                for detail in details:
-                    message.append(detail)
-                
+                # for detail in details:
+                    # message.append(detail)
                 
                 if 'update' in request.form:
                     return redirect('/update_importer')
@@ -386,7 +392,7 @@ def show_update_importer():
                 if 'edit' in request.form:
                     global impname
                     impname = request.form['edit']
-                    cursor.execute("select impname, ic, gst, pan, fssai from imp_details where impname = \'%s\';"%(impname))                
+                    cursor.execute("select impname, ic, gst, pan, fssai, doe from imp_details where impname = \'%s\';"%(impname))                
                     details = cursor.fetchone()
                     for detail in details:
                         message1.append(detail)    
@@ -396,9 +402,10 @@ def show_update_importer():
                     pan = request.form['b2']
                     gst = request.form['b3']
                     lic = request.form['b4']
-                    updates = [ic, pan, gst, lic, impname]
+                    date = request.form['b5']
+                    updates = [ic, pan, gst, lic, impname, date]
                     print(updates)
-                    cursor.execute('UPDATE imp_details SET ic = %s, gst = %s, pan = %s, fssai = %s WHERE impname = \'%s\';'%(updates[0],updates[1],updates[2],updates[3],updates[4]))
+                    cursor.execute('UPDATE imp_details SET ic = %s, gst = %s, pan = %s, fssai = %s, doe=%s WHERE impname = \'%s\';'%(updates[0],updates[1],updates[2],updates[3],updates[4],updates[5]))
                     mysql.connection.commit()
                     cursor.close()
                     

@@ -30,7 +30,9 @@
             <form method='POST' action="{{url_for('docview_kyc') }}"><h5 class="my-1">IC</h5> <h6 class="my-2"><button class="btn" name='b1'type='submit'value ="{{message[0]}}'+'d01"style="border:1px solid black;" >{{message[1]}}</button></h6> </form>
             <form method='POST' action="{{url_for('docview_kyc') }}"><h5 class="my-1">PAN</h5><h6 class="my-2"><button class="btn" name='b1'type='submit'value ="{{message[0]}}'+'d01"style="border:1px solid black;">{{message[2]}}</button></h6> </form>
             <form method='POST' action="{{url_for('docview_kyc') }}"><h5 class="my-1">GST</h5><h6 class="my-2"><button class="btn" name='b1'type='submit'value ="{{message[0]}}'+'d01"style="border:1px solid black;">{{message[3]}}</button></h6> </form>
-            <form method='POST' action="{{url_for('docview_kyc') }}"><h5 class="my-1">FSSAI LIC</h5><h6 class="my-2"><button class="btn" name='b1'type='submit'value ="{{message[0]}}'+'d01"style="border:1px solid black;">{{message[4]}}</button></h6> </form>
+            <form method='POST' action="{{url_for('docview_kyc') }}"><h5 class="my-1">FSSAI LIC</h5><h6 class="my-2"><button class="btn" name='b1'type='submit'value ="{{message[0]}}'+'d01"style="border:1px solid black;">{{message[4]}}</button></h6> 
+            <h6>{% if message[5]==1 %}Your license expires in a month {% else %} {% if message[5]==2 %}Your license expires in a week {% else %} {% if message[5]==3 %}Your license has expired!{% endif %}{% endif %}{% endif %}</h6>
+            </form>
             <form method="POST" action="{{url_for('show_update_importer')}}">
                 <button name="edit"type="submit"class="btn btn-outline-dark"style="position: absolute;left: 90%;top: 40px;padding-top:0.85px;padding-bottom:0.85px;padding:2px" value="{{message[0]}}"><i class='fas fa-edit' aria-hidden="true"></i> <u>EDIT</u></button>
             </form>
@@ -40,7 +42,6 @@
         </div>
     </div>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
