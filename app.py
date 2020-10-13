@@ -14,6 +14,7 @@ app.config['MYSQL_PASSWORD'] = 'Hr0cketss@12357'
 app.config['MYSQL_DB'] = 'RBA'
 #app.config['MYSQL_UPLOAD_FILES'] = db['mysql_fileStored']
 app.secret_key = 'jobhitulikhnachaheBongoliMC'
+
 mysql = MySQL(app)
 
 val = None
@@ -68,6 +69,7 @@ def index():
     return render_template('index.html')
 
 
+
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     try:
@@ -86,6 +88,7 @@ def home():
                 cursor.execute('SELECT * from completed')
             
             temp_data = cursor.fetchall()
+            print(temp_data)
             cursor.execute('SHOW COLUMNS FROM imports')
             col_data = cursor.fetchall()
             cursor.close() 
@@ -150,8 +153,7 @@ def upload():
     try:
         new_imp=[]
         cursor = mysql.connection.cursor()
-        if session['user_id']:
-            
+        if session['user_id']:            
             cursor.execute("select impname from imp_details order by impname asc;")
             imname = cursor.fetchall()
             for i in imname:
@@ -174,17 +176,9 @@ def upload():
                 srno = cursor.fetchone()
                
                 
-                if srno[0] == 'NULL':
-                    srno[0] = 0
-                new_srno = srno[0]+1
-                os.mkdir('FileUp/'+str(new_srno))
+                
                 for i in range(1,24):
                     data.append(None)
-                    if (i != 1) and (i != 9) and (i!=3):
-                        f = request.files[f"d{i:02d}"]
-                        if f.filename == '':
-                            continue
-                        f.save(f"FileUp/{new_srno}/d{i:02d}.pdf")
                     t_data = request.form['f{}'.format(i)]
                     if (i==1 or i==9 or i==3) and (t_data == ''):
                         t_data = None
@@ -199,6 +193,16 @@ def upload():
                 mysql.connection.commit()
                 cursor.close()  
                 
+                if srno[0] == 'NULL':
+                    srno[0] = 0
+                new_srno = srno[0]+1
+                os.mkdir('FileUp/'+str(new_srno))
+                for i in range(1,24):
+                    if (i != 1) and (i != 9) and (i!=3):
+                        f = request.files[f"d{i:02d}"]
+                        if f.filename == '':
+                            continue
+                        f.save(f"FileUp/{new_srno}/d{i:02d}.pdf")
                 
                 return redirect('/home')
             return render_template('upload.html', new_imp=new_imp)
