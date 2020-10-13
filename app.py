@@ -8,9 +8,9 @@ from datetime import date
 app = Flask(__name__)
 
 #db = yaml.safe_load(open('db.yaml'))
-app.config['MYSQLDB_HOST'] = 'localhost'
-app.config['MYSQLDB_USER'] = 'Hrushit'
-app.config['MYSQLDB_PASSWORD'] = ''
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'Hrushit'
+app.config['MYSQL_PASSWORD'] = 'Hr0cketss@12357'
 app.config['MYSQL_DB'] = 'RBA'
 #app.config['MYSQL_UPLOAD_FILES'] = db['mysql_fileStored']
 app.secret_key = 'jobhitulikhnachaheBongoliMC'
